@@ -100,9 +100,10 @@ header {
 }
 
 .header-nav {
-    position: absolute;
+    /* position: absolute;
     left: 352px;
-    top: 28px;
+    top: 28px; */
+    margin: auto;
 }
 
 .header-nav a {
@@ -197,7 +198,7 @@ header {
     justify-content: space-between;
 }
 
-.user-link-size {
+.user-link-size a {
     font-family: Poppins;
     font-style: normal;
     font-weight: 500;
@@ -206,8 +207,33 @@ header {
     text-decoration: none;
 }
 
-.user-link-size:hover {
+.user-link-size a:hover {
     color: #FFFFFF;
+    text-decoration: none;
+}
+
+.user-link-size .dropdown-toggle {
+    position: relative;
+    bottom: 5px;
+    color: #2F970C;
+}
+
+.user-link-size .dropdown-item {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    color: #817E7E;
+}
+
+.user-link-size .dropdown-item:hover {
+    background: #2F970C;
+    color: #FFFFFF;
+}
+
+.user-link-size .logout-link {
+    position: relative;
+    bottom: 2px;
 }
 
 .link-border {
@@ -453,7 +479,7 @@ footer {
     background-repeat: no-repeat;
     background-size: cover;
     border: 4px solid #FFFFFF;
-    width: 250px;
+    width: 100%;
 }
 
 .reserved ul li a:hover {
@@ -468,18 +494,18 @@ footer {
     text-transform: capitalize;
     color: #FFFFFF;
     font-size: 18px;
-    padding: 34px 42px 12px 43px;
+    padding: 14px 22px 12px 23px;
 }
 
 .converter-wrapper .converter-container .title-underline {
-    width: 199px;
+    width: 80%;
     height: 0px;
     margin: 0 auto;
     border: 1px solid #FFFFFF;
 }
 
 .converter-wrapper .converter-container .converter-form {
-    padding: 17px 28px 40px 30px;
+    padding: 17px 18px 40px 20px;
 }
 
 .converter-wrapper .converter-container .converter-form .form-group label {
@@ -545,18 +571,19 @@ footer {
     line-height: 19px;
     text-align: center;
     color: #FFFFFF;
-    padding: 5px 38px;
+    padding: 5px 28px;
 }
 
 .carousel-container {
-    margin: 0px 40px;
+    max-width: 1700px;
+    width: 100%;
     width: 809px;
     height: 294px;
 }
 
 .slideshow-wrapper .title {
     position: absolute;
-    top: 130px;
+    bottom: 30px;
     left: 0;
     right: 0;
     text-align: center;
@@ -571,6 +598,11 @@ footer {
 
 /* .slideshow-wrapper img {} */
 
+.slideshow-wrapper img {
+    max-width: 1706px;
+    width: 100%;
+}
+
 .slideshow-wrapper:before {
     content: '';
     position: absolute;
@@ -580,6 +612,8 @@ footer {
     bottom: 0;
     background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
     z-index: 1;
+    max-width: 1706px;
+    width: 100%;
 }
 
 .custom-dot-list-style {
@@ -592,10 +626,32 @@ footer {
     margin-right: 12px;
 }
 
+.carousel .control-dots .dot {
+    width: 11.71px !important;
+    height: 11.71px !important;
+    background: #666666 !important;
+}
+
+.carousel .control-dots .dot.selected {
+    background: #2F970C !important;
+}
+
 .custom-dot-list-style .react-multi-carousel-dot.react-multi-carousel-dot--active button {
     background: #2F970C;
     border-color: #2F970C;
     margin-right: 12px;
+}
+
+.carousel-status {
+    display: none;
+}
+
+.carousel-root {
+    margin: 0 10px 0 0 !important;
+}
+
+.carousel-root .carousel {
+    max-width: 25000px;
 }
 
 .option-container {
@@ -603,7 +659,8 @@ footer {
 }
 
 .option-container .option-header {
-    width: 230px;
+    max-width: 427px;
+    width: 100%;
     height: 147px;
     background: #F06E0C;
 }
@@ -671,9 +728,11 @@ footer {
     color: #FFFFFF;
 }
 
-.option-table .table-btn-section {
-    margin-top: 34px;
-    margin-left: 30px;
+.table-btn-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .table-btn-section a {
@@ -694,7 +753,8 @@ footer {
 .img-container img {
     margin-top: 7px;
     margin-bottom: 10px;
-    width: 224.83px;
+    max-width: 426.66px;
+    width: 100%;
 }
 
 .sports-section {
@@ -739,10 +799,6 @@ footer {
     font-size: 11px;
     line-height: 13px;
     color: #363A43;
-}
-
-.sport-btn {
-    margin-left: 30px;
 }
 
 .sport-btn:hover {
@@ -829,12 +885,17 @@ footer {
     padding: 38px 59px 50px 58px;
 }
 
+.offers .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
 .offers .icon .iconify {
     position: relative;
     color: #F06E0C;
     font-size: 60px;
-    margin: 0 78px;
-    margin-bottom: 13px;
 }
 
 .offers .title {
@@ -899,9 +960,10 @@ footer {
     margin-right: 25px;
 }
 
-.card-container {
+
+/* .card-container {
     width: 273px;
-}
+} */
 
 .card-container .image img {
     width: 100%;

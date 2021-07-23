@@ -117,7 +117,7 @@ const OptionSection = () => {
                     </tbody>
                 </Table>
                 <div className="table-btn-section">
-                    <Link to="./available-leagues" className="btn-green sport-btn">View All</Link>
+                    <Link to="./available-leagues" className="btn-green">View All</Link>
                 </div>
             </div>
         </div>

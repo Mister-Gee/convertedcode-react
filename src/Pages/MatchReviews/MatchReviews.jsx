@@ -18,23 +18,23 @@ const MatchReviews = () => {
                         <PageHeader title="Match Reviews"/>
                     </Col>
                 </Row>
-                <Row className="mt-5 ml-5 mr-n5 pl-5">
-                    <Col lg={4} className="mb-4">
+                <Row className="mt-5  pl-5">
+                    <Col lg={4} className="pl-5 pr-5 mb-4">
                         <MatchReviewCard />
                     </Col>
-                    <Col lg={4} className="mb-4">
+                    <Col lg={4} className="pl-5 pr-5 mb-4">
                         <MatchReviewCard />
                     </Col>
-                    <Col lg={4} className="mb-4">
+                    <Col lg={4} className="pl-5 pr-5 mb-4">
                         <MatchReviewCard />
                     </Col>
-                    <Col lg={4} className="mb-4">
+                    <Col lg={4} className="pl-5 pr-5 mb-4">
                         <MatchReviewCard />
                     </Col>
-                    <Col lg={4} className="mb-4">
+                    <Col lg={4} className="pl-5 pr-5 mb-4">
                         <MatchReviewCard />
                     </Col>
-                    <Col lg={4} className="mb-4">
+                    <Col lg={4} className="pl-5 pr-5 mb-4">
                         <MatchReviewCard />
                     </Col>
                 </Row>
