@@ -833,7 +833,9 @@ footer {
 }
 
 .offer-section {
-    margin-top: 80px;
+    background-color: #363A43;
+    padding-top: 50px;
+    z-index: 2;
 }
 
 .offer-section .title {
@@ -883,6 +885,11 @@ footer {
     border-radius: 5px;
     display: block;
     padding: 38px 59px 50px 58px;
+    height: 100%;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 }
 
 .offers .icon {
@@ -896,6 +903,11 @@ footer {
     position: relative;
     color: #F06E0C;
     font-size: 60px;
+}
+
+.offers .icon img {
+    position: relative;
+    width: 65px;
 }
 
 .offers .title {
@@ -1203,6 +1215,11 @@ footer {
 .mrcc {
     margin: 0px 30px !important;
     height: 380.98px;
+    padding-right: 30px;
+}
+
+.react-multi-carousel-track {
+    padding: 30px !important;
 }
 
 .mrcdls {

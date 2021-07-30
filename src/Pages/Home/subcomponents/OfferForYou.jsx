@@ -1,6 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 import OfferComponent from "./OfferComponent";
-
+import OfferComponentImg from "./OfferComponentImg";
 
 const OfferForYou = () => {
     return (
@@ -30,8 +30,8 @@ const OfferForYou = () => {
                         />
                     </Col>
                     <Col lg={6}>
-                        <OfferComponent 
-                            icon="mdi:star-check"
+                        <OfferComponentImg
+                            img="./assets/images/star.png"
                             title="Match Reviews"
                             body="We breakdown each match by considering the stats of the team's previous matches, 
                             and provide you the mostly likely outcome. This allows you to make the best possible decision before you place your bet."

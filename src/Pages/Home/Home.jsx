@@ -6,6 +6,7 @@ import OptionSection from "./subcomponents/OptionSection";
 import OfferForYou from "./subcomponents/OfferForYou";
 import HomeMatchReview from "./subcomponents/HomeMatchReview";
 import {Helmet} from "react-helmet";
+import { Parallax } from 'react-scroll-parallax';
 
 const Home = () => {
       
@@ -21,11 +22,18 @@ const Home = () => {
                         <ConvertForm />
                     </Col>
                     <Col lg={8}>
-                        <CarouselHeader
-                            deviceType="desktop" 
-                        />
+                        
+                            <CarouselHeader
+                                deviceType="desktop" 
+                            />
+                        <Parallax
+                            tagOuter="figure"
+                            y={[10, -40]}
+                            x={[0, 0]}
+                        >
                         <OfferForYou />
                         <HomeMatchReview />
+                        </Parallax>
                     </Col>
                     <Col lg={2}>
                         <OptionSection />
