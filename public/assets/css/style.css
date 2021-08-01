@@ -835,7 +835,7 @@ footer {
 .offer-section {
     background-color: #363A43;
     padding-top: 50px;
-    z-index: 2;
+    z-index: 3;
 }
 
 .offer-section .title {
@@ -886,10 +886,6 @@ footer {
     display: block;
     padding: 38px 59px 50px 58px;
     height: 100%;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
 }
 
 .offers .icon {
@@ -932,6 +928,7 @@ footer {
 .match-review-home .header-link {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
 }
 
@@ -944,6 +941,12 @@ footer {
     color: #F06E0C;
 }
 
+.match-review-home .header-link .link {
+    align-self: center;
+    position: relative;
+    left: -30px;
+}
+
 .match-review-home .header-link .link a {
     border: 1px solid #2F970C;
     box-sizing: border-box;
@@ -952,9 +955,13 @@ footer {
     font-weight: normal;
     font-size: 13px;
     line-height: 19px;
-    text-align: center;
+    text-align: start;
     color: #FFFFFF;
     padding: 5px 59px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 }
 
 .match-review-home .header-link .link a:hover {
@@ -1021,6 +1028,10 @@ footer {
     border: 1px solid #8B8787;
     transform: rotate(90deg);
     margin: 0px 5px;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
 }
 
 
@@ -1035,6 +1046,7 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: #363A43;
 }
 
 .punters-tips-table-section .date-search {
@@ -1215,11 +1227,6 @@ footer {
 .mrcc {
     margin: 0px 30px !important;
     height: 380.98px;
-    padding-right: 30px;
-}
-
-.react-multi-carousel-track {
-    padding: 30px !important;
 }
 
 .mrcdls {

@@ -2,6 +2,7 @@ import Frame from "../Components/Frame";
 import {Helmet} from "react-helmet";
 import {Container, Row, Col, Table} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import { Parallax } from 'react-scroll-parallax';
 
 const PuntersTips = () => {
     return (
@@ -18,6 +19,11 @@ const PuntersTips = () => {
                 </Row>
                 <Row className="mt-3 pt-5">
                     <Col lg={12}>
+                        <Parallax
+                            tagOuter="figure"
+                            y={[20, -30]}
+                            x={[0, 0]}
+                        >
                         <div className="punters-tips-table-section">
                             <div className="date-search">
                                 <div className="date-sort">
@@ -58,6 +64,7 @@ const PuntersTips = () => {
                                 </Table>
                             </div>
                         </div>
+                        </Parallax>
                     </Col>
                 </Row>
                 <Row className="mt-3">

@@ -22,17 +22,16 @@ const Home = () => {
                         <ConvertForm />
                     </Col>
                     <Col lg={8}>
-                        
-                            <CarouselHeader
+                        <CarouselHeader
                                 deviceType="desktop" 
-                            />
+                        />
                         <Parallax
                             tagOuter="figure"
-                            y={[10, -40]}
+                            y={[20, -25]}
                             x={[0, 0]}
                         >
-                        <OfferForYou />
-                        <HomeMatchReview />
+                            <OfferForYou />
+                            <HomeMatchReview />
                         </Parallax>
                     </Col>
                     <Col lg={2}>
