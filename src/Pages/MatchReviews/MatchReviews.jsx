@@ -1,9 +1,9 @@
 import Frame from "../Components/Frame";
 import {Helmet} from "react-helmet";
 import {Container, Row, Col} from "react-bootstrap";
-import PageHeader from "../Components/PageHeader";
 import MatchReviewCard from "./Subcomponents/MatchReviewCard";
 import {Link} from "react-router-dom";
+import Banner from "./Subcomponents/Banner";
 
 const MatchReviews = () => {
     return (
@@ -15,7 +15,7 @@ const MatchReviews = () => {
             <Container fluid className="wrapper">
                 <Row className="pt-5 ml-n5 mr-n4">
                     <Col lg={12}>
-                        <PageHeader title="Match Reviews"/>
+                        <Banner />
                     </Col>
                 </Row>
                 <Row className="mt-5  pl-5">

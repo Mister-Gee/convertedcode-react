@@ -1,7 +1,6 @@
 import Frame from "../Components/Frame";
 import {Helmet} from "react-helmet";
 import {Container, Row, Col} from "react-bootstrap";
-import PageHeader from "../Components/PageHeader";
 import TerminologiesCard from "./Subcomponents/TerminologiesCard";
 import {Link} from "react-router-dom";
 
@@ -15,10 +14,14 @@ const BetTerminologies = () => {
             <Container fluid className="wrapper">
                 <Row className="pt-5 ml-n5 mr-n4">
                     <Col lg={12}>
-                        <PageHeader 
-                            title="Bet Terminologies"
-                            titleStyle="bet-terminologies"
-                        />
+                        <div className="bet-term-wrapper">
+                            <span className="head">
+                                Bet
+                            </span>
+                            <span className="tail">
+                                 Terminologies
+                            </span>
+                        </div>
                     </Col>
                 </Row>
                 <Row className="mt-5 ml-3 mr-n5 pl-5">

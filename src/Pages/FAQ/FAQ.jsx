@@ -1,7 +1,6 @@
 import Frame from "../Components/Frame";
 import {Helmet} from "react-helmet";
 import {Container, Row, Col} from "react-bootstrap";
-import PageHeader from "../Components/PageHeader";
 
 const FAQ = () => {
     return (
@@ -13,10 +12,11 @@ const FAQ = () => {
             <Container fluid className="wrapper">
                 <Row className="pt-5 ml-n5 mr-n4">
                     <Col lg={12}>
-                        <PageHeader 
-                            title="FAQ"
-                            titleStyle="faq"
-                        />
+                        <div className="faq-wrapper">
+                            <span className="head">
+                                FAQ
+                            </span>
+                        </div>
                     </Col>
                 </Row>
             </Container>

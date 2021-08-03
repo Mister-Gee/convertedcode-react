@@ -1,7 +1,6 @@
 import Frame from "../Components/Frame";
 import {Helmet} from "react-helmet";
 import {Container, Row, Col, Table} from "react-bootstrap";
-import PageHeader from "../Components/PageHeader";
 
 const AvailableLeagues = () => {
     return (
@@ -13,10 +12,14 @@ const AvailableLeagues = () => {
             <Container fluid className="wrapper">
                 <Row className="pt-5 ml-n5 mr-n4">
                     <Col lg={12}>
-                        <PageHeader 
-                            title="Available Leagues"
-                            titleStyle="available-option"
-                        />
+                        <div className="bet-term-wrapper">
+                            <span className="head">
+                                Available
+                            </span>
+                            <span className="tail">
+                                 Leagues
+                            </span>
+                        </div>
                     </Col>
                 </Row>
                 <Row className="mt-3 pt-5">

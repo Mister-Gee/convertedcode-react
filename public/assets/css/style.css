@@ -1211,6 +1211,47 @@ footer {
 
 /***********Match Reviews***************/
 
+.banner-wrapper {
+    display: flex;
+    flex-direction: row;
+    max-width: 4000px;
+    width: 100%;
+    height: 380.98px;
+    background: #121C1D;
+}
+
+.banner-wrapper .carousel-section {
+    padding-top: 35px;
+    padding-left: 30px;
+}
+
+.banner-wrapper .title-header {
+    display: block;
+}
+
+.banner-wrapper .title-header .head,
+.banner-wrapper .title-header .tail {
+    font-style: normal;
+    font-weight: bold;
+}
+
+.banner-wrapper .title-header .head {
+    position: relative;
+    bottom: 52px;
+    right: 10px;
+    font-size: 180px;
+    line-height: 300px;
+    color: #2F970C;
+}
+
+.banner-wrapper .title-header .tail {
+    font-size: 143px;
+    color: #F06E0C;
+    position: relative;
+    bottom: 113px;
+    right: 10px;
+}
+
 .match-review-header {
     max-width: 4000px;
     width: 100%;
@@ -1345,4 +1386,82 @@ footer {
 
 .tc-article a:hover {
     color: #FFFFFF;
+}
+
+
+/********Bet Terminologies*********/
+
+.bet-term-wrapper {
+    max-width: 4000px;
+    width: 100%;
+    height: 380.98px;
+    background: #121C1D;
+    display: flex;
+    flex-direction: column;
+}
+
+.bet-term-wrapper .head,
+.bet-term-wrapper .tail {
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.1 !important;
+}
+
+.bet-term-wrapper .head {
+    font-size: 180px;
+    color: #2F970C;
+}
+
+.bet-term-wrapper .tail {
+    font-size: 150px;
+    color: #F06E0C;
+}
+
+
+/****FAQ***/
+
+.faq-wrapper {
+    max-width: 4000px;
+    width: 100%;
+    height: 300.98px;
+    background: #121C1D;
+    display: flex;
+    flex-direction: column;
+}
+
+.faq-wrapper .head {
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.4 !important;
+    font-size: 180px;
+    color: #2F970C;
+}
+
+
+/*********Terms and Conditions***********/
+
+.tac-wrapper {
+    max-width: 4000px;
+    width: 100%;
+    height: 380.98px;
+    background: #121C1D;
+    display: flex;
+    flex-direction: column;
+}
+
+.tac-wrapper .head,
+.tac-wrapper .tail {
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.0 !important;
+}
+
+.tac-wrapper .head {
+    font-size: 140px;
+    color: #2F970C;
+}
+
+.tac-wrapper .tail {
+    font-size: 110px;
+    color: #F06E0C;
 }

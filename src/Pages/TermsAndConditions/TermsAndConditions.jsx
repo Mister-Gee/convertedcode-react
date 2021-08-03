@@ -1,7 +1,6 @@
 import Frame from "../Components/Frame";
 import {Helmet} from "react-helmet";
 import {Container, Row, Col} from "react-bootstrap";
-import PageHeader from "../Components/PageHeader";
 import {Link} from "react-router-dom";
 
 const TermsAndConditions = () => {
@@ -14,10 +13,17 @@ const TermsAndConditions = () => {
             <Container fluid className="wrapper">
                 <Row className="pt-5 ml-n5 mr-n4">
                     <Col lg={12}>
-                        <PageHeader 
-                            title="Terms & Conditions"
-                            titleStyle="tc"
-                        />
+                        <div className="tac-wrapper">
+                            <span className="head">
+                                Terms
+                            </span>
+                            <span className="tail">
+                                 {"&"}
+                            </span>
+                            <span className="tail">
+                                 Conditions
+                            </span>
+                        </div>
                     </Col>
                 </Row>
                 <Row className="mt-5 ml-5 mr-5 pl-5 pr-5">
