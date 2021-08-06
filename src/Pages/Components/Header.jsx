@@ -1,7 +1,9 @@
 import { NavLink, Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import { Nav, NavDropdown } from 'react-bootstrap';
-
+import { useContext, useState } from "react";
+import { MenuContext } from "react-flexible-sliding-menu";
+import { HamburgerBarsIcon, CancelIcon } from './SVGicon';
 
 const Header = () => {
     const initialValues = {
@@ -11,8 +13,17 @@ const Header = () => {
     const onSubmit = (value) => {
         console.log(value)
     }
+    const { toggleMenu } = useContext(MenuContext);
+
+    const [navOpen, setNavOpen] = useState(false)
+    const handleMenuToggle = () => {
+        setNavOpen(!navOpen)
+        toggleMenu();
+    }
+
     return (
-        <header>
+        <>
+        <header className="desktop-header">
             <div className="header-wrapper">
                 <div className="logo-section">
                     <img src="./assets/images/logo-color.png" alt="converted code" />
@@ -93,13 +104,11 @@ const Header = () => {
                                                 menuVariant="dark"
                                                 className="primary-color user-link-size"
                                             >
-                                                <NavDropdown.Item as={Link} to="./bet-terminologies">Dashboard</NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} to="./dashboard">Dashboard</NavDropdown.Item>
                                                 <NavDropdown.Divider />
-                                                <NavDropdown.Item as={Link} to="./bet-terminologies">Subcription</NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} to="./subscription-plans">Subcription Plans</NavDropdown.Item>
                                                 <NavDropdown.Divider />
-                                                <NavDropdown.Item as={Link} to="./bet-terminologies">Link</NavDropdown.Item>
-                                                <NavDropdown.Divider />
-                                                <NavDropdown.Item as={Link} to="./bet-terminologies">Link</NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} to="./support">Support</NavDropdown.Item>
                                             </NavDropdown>
                                         </Nav>
                                     </div>
@@ -115,7 +124,24 @@ const Header = () => {
 
             </div>
         </header>
+        <header className="mobile-header">
+            <div className="mobile-header-wrapper">
+                <div className="drawer-icon" onClick={handleMenuToggle}>
+                    {navOpen ? <CancelIcon/> : <HamburgerBarsIcon />}   
+                </div>
+                <div className="logo-section">
+                    <img src="./assets/images/logo-color.png" alt="converted code" />
+                    <div className="logo-name">Converted<span>Code</span></div>
+                </div>
+                <div className="search-icon">
+                    <div className="icon">
+                        <span className="iconify" data-icon="ic:baseline-search"></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        </>
     )
 }
 
-export default Header
+export default Header;

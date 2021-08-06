@@ -1,7 +1,21 @@
 import {Formik} from 'formik';
 import {Link} from 'react-router-dom';
+import { ConvertIcon } from './SVGicon';
+import {useState, useCallback} from 'react';
+import Drawer from "react-bottom-drawer";
+import MobileConvertForm from './MobileConvertForm';
 
 const Footer = () => {
+    const [isVisible, setIsVisible] = useState(false);
+
+    const onClose = useCallback(() => {
+        setIsVisible(false);
+      }, []);
+
+    const onOpen = useCallback(() => {
+        setIsVisible(true);
+      }, []);
+
     const initialValues = {
         email: ""
     }
@@ -11,7 +25,8 @@ const Footer = () => {
     }
 
     return (
-        <footer>
+        <>
+        <footer className="desktop-footer">
             <div className="footer-container">
                 <div className="footer-link-section">
                     <div className="logo-sub">
@@ -111,6 +126,35 @@ const Footer = () => {
                 </div>
             </div>
         </footer>
+        <footer className="mobile-footer">
+            <div className="gamble-aware-text">
+                <h3 className="header">
+                    Gamble Aware
+                </h3>
+                <p className="body">
+                    Make it a habit to always tap out of your betting app before you place a bet, to give you some time to think it through and help you avoid Bet Regret.
+                </p>
+            </div>
+            <div className="gamble-aware-logo">
+                <img src="./assets/images/bga.png" alt="Gamble Aware"/>
+            </div>
+            <div className="converter-icon-section">
+                <div className="icon" onClick={onOpen}>
+                    <ConvertIcon />
+                </div>
+                <div className="text" onClick={onOpen}>
+                    Convert Code
+                </div>
+            </div>
+            <Drawer
+                isVisible={isVisible}
+                onClose={onClose}
+                duration={500}
+            >
+                <MobileConvertForm close={onClose}/>
+            </Drawer>
+        </footer>
+        </>
     )
 }
 

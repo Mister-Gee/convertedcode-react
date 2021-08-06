@@ -7,6 +7,9 @@ import OfferForYou from "./subcomponents/OfferForYou";
 import HomeMatchReview from "./subcomponents/HomeMatchReview";
 import {Helmet} from "react-helmet";
 import { Parallax } from 'react-scroll-parallax';
+import MobileOptionSlider from "./subcomponents/MobileOptionSlider";
+import MobileMatchReview from "./subcomponents/MobileMatchReview";
+import { Link } from "react-router-dom";
 
 const Home = () => {
       
@@ -23,7 +26,7 @@ const Home = () => {
                     </Col>
                     <Col lg={8}>
                         <CarouselHeader
-                                deviceType="desktop" 
+                            deviceType="desktop" 
                         />
                         <Parallax
                             tagOuter="figure"
@@ -39,6 +42,21 @@ const Home = () => {
                     </Col>
                 </Row>
             </Container>
+            <div className="mobile-wrapper">
+                <div className="mobile-carousel-slider">
+                    <CarouselHeader/>
+                </div>
+                <div className="option-slider">
+                    <MobileOptionSlider />
+                </div>
+                <div className="mobile-home-mr-wrapper">
+                    <div className="header">
+                        <div className="title">Match Review</div>
+                        <div className="link"> <Link to="./match-review">View All</Link> </div>
+                    </div>
+                    <MobileMatchReview />
+                </div>
+            </div>
         </Frame>
     )
 }

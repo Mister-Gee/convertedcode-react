@@ -1,7 +1,7 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 
-const MatchReviewCarousel = (props) => {
+const MatchReviewCarousel = () => {
     return (
             <Carousel
               dynamicHeight={true}
@@ -12,10 +12,10 @@ const MatchReviewCarousel = (props) => {
               infiniteLoop={true}
               stopOnHover={true}
               preventMovementUntilSwipeScrollTolerance={true}
-              width={"100%"}
+              width={"90%"}
             >
                 <div className='slideshow-wrapper'>
-                    <img src='./assets/images/header.png' alt="slider"/>
+                    <img src='./assets/images/matchreview.png' alt="slider"/>
                 </div>
             </Carousel>
     )
