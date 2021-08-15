@@ -1,14 +1,39 @@
 import Frame from "../Components/Frame";
 import {Helmet} from "react-helmet";
 import {Container, Row, Col, Table} from "react-bootstrap";
+import { useState, useEffect } from 'react';
+import {getAvailableOptions} from '../../services/availableOptionServices';
+import ContentLoader from '../Components/ContentLoader';
 
 const AvailableOptions = () => {
+    const [isLoading, setIsLoading] = useState(true)
+
+    const [options, setOptions] = useState([])
+
+    useEffect(() => {
+        const fetch = async () => {
+            try{
+                const res = await getAvailableOptions()
+                setOptions(res.data.data)
+                setIsLoading(false)
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+        fetch()
+    }, 
+    [])
+
     return (
         <Frame>
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>Available Options | ConvertedCode</title>
             </Helmet>
+            {isLoading ?
+            <ContentLoader/>
+            :
             <Container fluid className="wrapper">
                 <Row className="pt-5 ml-n5 mr-n4">
                     <Col lg={12}>
@@ -60,13 +85,16 @@ const AvailableOptions = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1X2</td>
-                                            <td><span className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                            <td> <span className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span> </td>
-                                            <td> <span className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span> </td>
-                                            <td> <span className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span> </td>
-                                        </tr>
+                                    {options.map(data => (
+                                    <tr key={data.id}>
+                                        <td>{data.option}</td>
+                                        <td>{data.bet9ja === "true" ? <span className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span> : <span style={{color: "red"}} className="iconify" data-icon="uim:times-circle"></span>}</td>
+                                        <td>{data.betking === "true" ? <span className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span> : <span style={{color: "red"}} className="iconify" data-icon="uim:times-circle"></span>}</td>
+                                        <td>{data.sportybet === "true" ? <span className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span> : <span style={{color: "red"}} className="iconify" data-icon="uim:times-circle"></span>}</td>
+                                        <td>{data.bet22 === "true" ? <span className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span> : <span style={{color: "red"}} className="iconify" data-icon="uim:times-circle"></span>}</td>
+                                    </tr>
+                                    ))
+                                    }
                                     </tbody>
                                 </Table>
                             </div>
@@ -87,6 +115,7 @@ const AvailableOptions = () => {
                     </Col>
                 </Row>
             </Container>
+            }
         </Frame>
             
         

@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { MenuContext } from "react-flexible-sliding-menu";
 import { 
           HomeIcon, 
-          EditIcon, 
           LogoutIcon, 
           WarningIcon, 
           UserIcon, 
@@ -11,22 +10,59 @@ import {
           StarCheckIcon,
           BulbIcon
         } from "./SVGicon";
+import { useState } from '@hookstate/core';
+import store from '../../store/store';
+import {logout} from '../../services/authServices';
+
 
 const SideNav = () => {
-    const { closeMenu } = useContext(MenuContext);
+  const history = useHistory()
+  const { closeMenu } = useContext(MenuContext);
+
+  const {user} = useState(store)
+  const {authDrawer} = useState(store)
+  const {alertNotification} = useState(store)
+  const {alertMessage} = useState(store)
+  const {alertType} = useState(store)
+
+
+
+  const handleLogout = async () => {
+    try{
+        let res = await logout()
+        if(res.status === 200){
+            localStorage.removeItem("accessToken")
+            localStorage.removeItem("returnToken")
+            user.set({})
+            alertType.set("success")
+            alertMessage.set(res.data.message)
+            alertNotification.set(true)
+            setTimeout(() => {
+                alertNotification.set(false)
+            }, 1500)
+            // setReturnToken(null)
+            history.push({
+                    pathname: "/"
+                })
+        }
+    }
+    catch(err){
+        console.log(err)
+    }
+}
 
   return (
     <div className="Menu">
       <div className="user">
-          <img src="./assets/images/avatar.png" alt="user" />
+          <img src="/assets/images/avatar.png" alt="user" />
           <div className="user-detail">
-              <div className="name">John</div>
-              <div className="action"> 
+              <div className="name">{user.get().username ? user.get().username : "User"}</div>
+              {/* <div className="action"> 
                 <span className="link">Edit Profile</span>
                 <span className="icon">
                     <EditIcon />
                 </span>
-              </div>
+              </div> */}
           </div>
       </div>
 
@@ -35,34 +71,49 @@ const SideNav = () => {
           <HomeIcon />
           <span>Home </span>
         </NavLink>
-        <NavLink to="./punters-tips">
+        <NavLink to="/punters-tips">
           <BulbIcon 
             color="#8B8787"
           />
           <span>Punters Tips</span>
         </NavLink>
-        <NavLink to="./match-review">
+        <NavLink to="/match-reviews">
           <StarCheckIcon 
             color="#8B8787"
           />
-          <span>Match Review</span>
+          <span>Match Reviews</span>
         </NavLink>
-        <NavLink to="./bet-terminologies">
+        <NavLink to="/bet-terminologies">
           <BallotIcon />
           <span>Bet Terminologies</span>
         </NavLink>
-        <NavLink to="./account" className="account">
+        {user.get().username ?
+        <NavLink to="/dashboard" className="account">
           <UserIcon />
-          <span>SignUp</span>
+          <span>Dashboard</span>
         </NavLink>
-        <NavLink to="./disclaimer">
+        :
+        <NavLink to="#" onClick={() => {
+              authDrawer.set(true)
+            }} 
+            className="account"
+          >
+          <UserIcon />
+          <span>SignIn</span>
+        </NavLink>
+        }
+        <NavLink to="/disclaimer">
           <WarningIcon />
           <span>Disclaimer</span>
         </NavLink>
-        <NavLink to="./logout" className="logout">
+        {user.get().username ?
+        <NavLink to="#" onClick={handleLogout} className="logout">
           <LogoutIcon />
           <span>Logout</span>
         </NavLink>
+        :
+        ""
+        }
       </nav>
     </div>
   )

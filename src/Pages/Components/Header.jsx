@@ -1,32 +1,148 @@
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useHistory} from 'react-router-dom';
 import { Formik } from 'formik';
-import { Nav, NavDropdown } from 'react-bootstrap';
-import { useContext, useState } from "react";
+import * as Yup from 'yup';
+import { Nav, NavDropdown, Spinner } from 'react-bootstrap';
+import React,{ useContext, useEffect } from "react";
 import { MenuContext } from "react-flexible-sliding-menu";
 import { HamburgerBarsIcon, CancelIcon } from './SVGicon';
+import {login, logout} from '../../services/authServices';
+import { useState } from '@hookstate/core';
+import store from '../../store/store';
+import AlertNortification from './AlertNortification';
+import jwt_decode from 'jwt-decode';
+import {getFromLocalStorage} from '../../utils/Functions';
+import ForgotPassword from './ForgotPassword';
 
 const Header = () => {
+    let history = useHistory();
+
+    const [returnToken, setReturnToken] = React.useState(null)
+    const [forgotPassword, setForgotPassword] = React.useState(false)
+    const [userName, setUserName] = React.useState("")
+
+    const {user} = useState(store)
+    const {authDrawer} = useState(store)
+
+
+    useEffect(() => {
+       const token = getFromLocalStorage("returnToken")
+        if(token){
+            const decoded = jwt_decode(token)
+            setUserName(decoded[0].username)
+            user.set(decoded[0])
+            setReturnToken(token)
+        }
+        else{
+            setReturnToken(null)
+        }
+    },[returnToken])
+
+    const {alertNotification} = useState(store)
+    const {alertMessage} = useState(store)
+    const {alertType} = useState(store)
+
+
+
     const initialValues = {
         email: "",
         pwd: ""
     }
-    const onSubmit = (value) => {
-        console.log(value)
+    
+    const onSubmit = async (value) => {
+        try{
+            let res = await login(value)
+            const status = res.status
+            const data = res.data
+            if(status === 201 && data != null){
+                localStorage.setItem("accessToken", data.token)
+                localStorage.setItem("returnToken", data.returnToken)
+                const decoded = jwt_decode(data.returnToken)
+                user.set(decoded[0])
+                alertType.set("success")
+                alertMessage.set("Login Successful")
+                alertNotification.set(true)
+                setTimeout(() => {
+                    alertNotification.set(false)
+                    history.push({
+                        pathname: "/dashboard"
+                    })
+                }, 1500)   
+                setReturnToken(data.returnToken)
+            }
+            else{
+                alertType.set("danger")
+                alertMessage.set("Invalid Email or Password")
+                alertNotification.set(true)
+                setTimeout(() => {
+                    alertNotification.set(false)
+                }, 1000)  
+            }
+        }
+        catch(err) {
+                alertType.set("danger")
+                alertMessage.set("Invalid Email or Password")
+                alertNotification.set(true)
+                setTimeout(() => {
+                    alertNotification.set(false)
+                }, 1000)
+        }
     }
+
+    const validationSchema = Yup.object({
+        email: Yup.string().email("Invalid Email Format").required("Email is required"),
+        pwd: Yup.string().required("Password is required")
+    })
+
     const { toggleMenu } = useContext(MenuContext);
 
-    const [navOpen, setNavOpen] = useState(false)
+    const [navOpen, setNavOpen] = React.useState(false)
     const handleMenuToggle = () => {
         setNavOpen(!navOpen)
         toggleMenu();
     }
 
-    return (
+    const handleLogout = async () => {
+        try{
+            let res = await logout()
+            if(res.status === 200){
+                localStorage.removeItem("accessToken")
+                localStorage.removeItem("returnToken")
+                user.set({})
+                alertType.set("success")
+                alertMessage.set(res.data.message)
+                alertNotification.set(true)
+                setTimeout(() => {
+                    alertNotification.set(false)
+                }, 1500)
+                setReturnToken(null)
+                history.push({
+                        pathname: "/"
+                    })
+            }
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+
+    // if(isLoggedin){
+    //     return <Redirect to="/dashboard" />
+    // }
+    // else if(!isLoggedin){
+    //     return <Redirect to="/" />
+    // }
+
+    return (        
         <>
         <header className="desktop-header">
+            <AlertNortification 
+                alertType={alertType.get()}
+                notification={alertNotification.get()}
+                message={alertMessage.get()}
+            />
             <div className="header-wrapper">
                 <div className="logo-section">
-                    <img src="./assets/images/logo-color.png" alt="converted code" />
+                    <img src="/assets/images/logo-color.png" alt="converted code" />
                     <div className="logo-name">Converted<span>Code</span></div>
                 </div>
                 <div className="header-nav">
@@ -37,62 +153,13 @@ const Header = () => {
                 </div>
                 <div className="auth-section">
                     <div className="user-wrapper">
-                        <span style={{ display: "none" }}>
-                            <Formik
-                                initialValues={initialValues}
-                                onSubmit={onSubmit}
-                            >
-                                {({
-                                    values,
-                                    errors,
-                                    touched,
-                                    handleChange,
-                                    handleBlur,
-                                    handleSubmit,
-                                    isSubmitting,
-                                    /* and other goodies */
-                                }) => (
-                                    <form onSubmit={handleSubmit}>
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            placeholder="Email"
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            value={values.email}
-                                            className="input login-input"
-                                        />
-                                        {errors.email && touched.email && errors.email}
-                                        <input
-                                            type="password"
-                                            placeholder="Password"
-                                            name="pwd"
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            value={values.pwd}
-                                            className="input login-input"
-                                        />
-                                        {errors.pwd && touched.pwd && errors.pwd}
-                                        <button
-                                            type="submit"
-                                            disabled={isSubmitting}
-                                            className="btn-green btn-login"
-                                        >
-                                            Submit
-                                        </button>
-                                    </form>
-                                )}
-                            </Formik>
-                            <div className="auth-links">
-                                <Link to="/forgotten-password" className="secondary-color link">Forgotten Password?</Link>
-                                <Link to="/register" className="primary-color link">Register</Link>
-                            </div>
-                        </span>
-                        <span>
+                        {
+                            returnToken
+                            ?
+                            <span>
                             <div className="user-details">
                                 <div className="user mb-3">
-                                    <div className="user-id white user-link-size">#12345</div>
-                                    <div className="username white user-link-size  ml-2">Gbenga Fakuade</div>
+                                    <div className="username white user-link-size  ml-3"> {userName} </div>
                                 </div>
                                 <div className="user-links">
                                     <div className="account">
@@ -114,23 +181,111 @@ const Header = () => {
                                     </div>
                                     <div className="link-border"></div>
                                     <div className="logout  user-link-size">
-                                        <Link to="/logout" className="primary-color logout-link">Logout</Link>
+                                        <Link 
+                                            to="#"
+                                            className="primary-color logout-link"
+                                            onClick={() => {
+                                                handleLogout()
+                                            }}
+                                        >
+                                            Logout
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
                         </span>
+                        :
+                        <span>
+                           {forgotPassword 
+                           ?
+                           <ForgotPassword />
+                           :
+                            <Formik
+                                initialValues={initialValues}
+                                onSubmit={onSubmit}
+                                validationSchema={validationSchema}
+                            >
+                                {({
+                                    values,
+                                    errors,
+                                    touched,
+                                    handleChange,
+                                    isSubmitting,
+                                    handleBlur,
+                                    handleSubmit,
+                                    
+                                    /* and other goodies */
+                                }) => (
+                                    <form onSubmit={handleSubmit}>
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            placeholder="Email"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.email}
+                                            className="input login-input"
+                                        />
+                                        {/* <small id="passwordHelpBlock" className="form-text text-danger">
+                                             {errors.email && touched.email && errors.email}
+                                        </small> */}
+                                        <input
+                                            type="password"
+                                            placeholder="Password"
+                                            name="pwd"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.pwd}
+                                            className="input login-input"
+                                        />
+                                        {/* <small id="passwordHelpBlock" className="form-text text-danger">
+                                            {errors.pwd && touched.pwd && errors.pwd}
+                                        </small> */}
+                                        <button
+                                            type="submit"
+                                            disabled={isSubmitting}
+                                            className="btn-green btn-login"
+                                        >
+                                            {isSubmitting 
+                                                ?
+                                                <Spinner animation="border" size="sm" />
+                                                :
+                                                "Login"
+                                            }
+                                        </button>
+                                    </form>
+                                )}
+                            </Formik>
+                            }
+                            <div className="auth-links">
+                                <span 
+                                    className="secondary-color link"
+                                    onClick={() => setForgotPassword(!forgotPassword)}
+                                >
+                                    {forgotPassword ? "Login?" : "Forgotten Password?"}
+                                </span>
+                                <Link to="/register" className="primary-color link">Register</Link>
+                            </div>
+                        </span>
+                    }
                     </div>
                 </div>
 
             </div>
         </header>
         <header className="mobile-header">
+            <AlertNortification 
+                alertType={alertType.get()}
+                notification={alertNotification.get()}
+                message={alertMessage.get()}
+            />
             <div className="mobile-header-wrapper">
                 <div className="drawer-icon" onClick={handleMenuToggle}>
-                    {navOpen ? <CancelIcon/> : <HamburgerBarsIcon />}   
+                    {/* {navOpen ? <CancelIcon/> : <HamburgerBarsIcon />}    */}
+                    <HamburgerBarsIcon />
                 </div>
                 <div className="logo-section">
-                    <img src="./assets/images/logo-color.png" alt="converted code" />
+                    <img src="/assets/images/logo-color.png" alt="converted code" />
                     <div className="logo-name">Converted<span>Code</span></div>
                 </div>
                 <div className="search-icon">
@@ -140,6 +295,7 @@ const Header = () => {
                 </div>
             </div>
         </header>
+        {/* { isLoggedin ? <Redirect to="/dashboard" /> : <Redirect to="/" /> } */}
         </>
     )
 }

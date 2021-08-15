@@ -1,20 +1,56 @@
 import {Formik} from 'formik';
 import {Link} from 'react-router-dom';
 import { ConvertIcon } from './SVGicon';
-import {useState, useCallback} from 'react';
+import React, {useCallback, useContext} from 'react';
 import Drawer from "react-bottom-drawer";
 import MobileConvertForm from './MobileConvertForm';
+import SignUpForm from './MobileAuthForms/SignUpForm';
+import SignInForm from './MobileAuthForms/SignInForm';
+import ForgotPassowordForm from './MobileAuthForms/ForgotPassowordForm';
+import { useState } from '@hookstate/core';
+import store from '../../store/store';
+
 
 const Footer = () => {
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = React.useState(false);
+    const [authForm, setAuthForm] = React.useState("login");
 
-    const onClose = useCallback(() => {
+    const {alertNotification} = useState(store)
+    const {alertMessage} = useState(store)
+    const {alertType} = useState(store)
+    const {authDrawer} = useState(store)
+    const {navIconState} = useState(store)
+
+
+    const onCloseConverterDrawer = useCallback(() => {
         setIsVisible(false);
       }, []);
 
-    const onOpen = useCallback(() => {
+    const onOpenConverterDrawer = useCallback(() => {
         setIsVisible(true);
       }, []);
+
+      const onCloseAuthDrawer = useCallback(() => {
+        authDrawer.set(false)
+      }, []);
+
+    const onOpenAuthDrawer = useCallback(() => {
+        authDrawer.set(true)
+      }, []);
+    
+    const handleLoginDrawer = () => {
+        setAuthForm("login")
+        onOpenAuthDrawer()
+    }
+
+    const handleRegisterDrawer = () => {
+        setAuthForm("signup")
+        onOpenAuthDrawer()
+    }
+
+    const handleForgotPasswordDrawer = () => {
+        setAuthForm("forgotPassword")
+    }
 
     const initialValues = {
         email: ""
@@ -31,7 +67,7 @@ const Footer = () => {
                 <div className="footer-link-section">
                     <div className="logo-sub">
                         <div className="logo">
-                            <img src="./assets/images/logo-white.png" alt="converted code"/>
+                            <img src="/assets/images/logo-white.png" alt="converted code"/>
                             <div className="logo-text">ConvertedCode</div>
                         </div>
                         <div className="subscribe">
@@ -50,7 +86,7 @@ const Footer = () => {
                                     /* and other goodies */
                                 }) => (
                                     <form onSubmit={handleSubmit}>
-                                    <div class="input-group mb-2 sub-group">
+                                    <div className="input-group mb-2 sub-group">
                                         <input
                                             type="email"
                                             name="email"
@@ -60,7 +96,7 @@ const Footer = () => {
                                             value={values.email}
                                             className="form-control sub-input"
                                         />
-                                        <div class="input-group-prepend">
+                                        <div className="input-group-prepend">
                                             <button 
                                                 type="submit" 
                                                 disabled={isSubmitting}
@@ -98,7 +134,7 @@ const Footer = () => {
                 <div className="footer-bga-section text-center mt-5">
                     <h4 className="bga-header">Gamble Aware</h4>
                     <div className="bga-body mb-2">Make it a habit to always tap out of your betting app before you place a bet, to give you some time to think it through and help you avoid Bet Regret.</div>
-                    <img src="./assets/images/bga.png" alt="Gamble Aware"/>
+                    <img src="/assets/images/bga.png" alt="Gamble Aware"/>
                     <div className="social-icons mt-3">
                         <a href="https://t.me/joinchat/RVZGQv7w4NAPRGWj" className="icon"><span className="iconify" data-icon="bx:bxl-telegram" data-inline="false"></span></a>
                         <a href="https://twitter.com/convertedcode_1?lang=en" className="icon"><span className="iconify" data-icon="akar-icons:twitter-fill" data-inline="false"></span></a>
@@ -136,22 +172,47 @@ const Footer = () => {
                 </p>
             </div>
             <div className="gamble-aware-logo">
-                <img src="./assets/images/bga.png" alt="Gamble Aware"/>
+                <img src="/assets/images/bga.png" alt="Gamble Aware"/>
             </div>
             <div className="converter-icon-section">
-                <div className="icon" onClick={onOpen}>
+                <div className="icon" onClick={onOpenConverterDrawer}>
                     <ConvertIcon />
                 </div>
-                <div className="text" onClick={onOpen}>
+                <div className="text" onClick={onOpenConverterDrawer}>
                     Convert Code
                 </div>
             </div>
             <Drawer
                 isVisible={isVisible}
-                onClose={onClose}
+                onClose={onCloseConverterDrawer}
                 duration={500}
             >
-                <MobileConvertForm close={onClose}/>
+                <MobileConvertForm close={onCloseConverterDrawer}/>
+            </Drawer>
+            <Drawer
+                isVisible={authDrawer.get()}
+                onClose={onCloseAuthDrawer}
+                duration={500}
+            >
+                {authForm === "signup" ?
+                <SignUpForm 
+                    loginAction={handleLoginDrawer}
+                /> 
+                : authForm === "login"
+                ?
+                <SignInForm 
+                    signupAction={handleRegisterDrawer}
+                    forgotPasswordaction={handleForgotPasswordDrawer}
+                /> 
+                :
+                authForm === "forgotPassword"
+                ?
+                <ForgotPassowordForm 
+                    loginAction={handleLoginDrawer}
+                />
+                :
+                ""
+                }
             </Drawer>
         </footer>
         </>

@@ -1,15 +1,19 @@
 import {Link} from 'react-router-dom';
 
-const MobileMatchReviewCard = () => {
+const MobileMatchReviewCard = ({imageLink, id, title, content, dateTime, author, state}) => {
     return (
         <div className="mobile-card-container">
             <div className="image">
-                <img src="./assets/images/match.png" alt="match"/>
+                <img src={`https://www.convertedcode.com/${imageLink}`} alt={title}/>
             </div>
-            <div className="title">  <Link to="./match-review"> Belgium vs Russia</Link></div>
-            <div className="desc">This is the sixth meeting between Belgium and Russia at a ma...</div>
+            <div className="title">
+                <Link  to={`./match-review/${id}`}>  
+                    {title} 
+                </Link>
+            </div>
+            <div className="desc">{content}...</div>
             <div className="author-date">
-              Gbenga  <span className="divider"></span>  2021-06-19 19:43:25
+              {author}  <span className="divider"></span> {dateTime}
             </div>
         </div>
     )

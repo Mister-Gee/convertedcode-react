@@ -19,6 +19,14 @@ body {
 
 /**********Mini Class*************/
 
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    background: #363A43;
+}
+
 .primary-color {
     color: #2F970C;
 }
@@ -69,6 +77,12 @@ body {
 .load-more-btn:hover {
     color: #2F970C;
     text-decoration: none;
+}
+
+.alert-box {
+    position: absolute !important;
+    left: 40%;
+    padding: 5px 50px !important;
 }
 
 
@@ -197,6 +211,7 @@ body {
     line-height: 13px;
     text-decoration: none;
     margin-left: 6px;
+    cursor: pointer;
 }
 
 .link:hover {
@@ -937,6 +952,13 @@ body {
     color: #FFFFFF;
 }
 
+.mr-loader {
+    position: relative;
+    top: 30px;
+    left: 40%;
+    padding-bottom: 50px;
+}
+
 .match-review-home .header-link {
     display: flex;
     flex-direction: row;
@@ -1339,6 +1361,61 @@ body {
     padding: 0px 54px 17px 10px;
 }
 
+.header-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header-container .match-review-image,
+.header-container .sub-header-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+
+.header-container .match-review-image img {
+    width: 60vw;
+}
+
+.header-container .sub-header-wrapper .author-date {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header-container .sub-header-wrapper .author-date .author,
+.header-container .sub-header-wrapper .author-date .date {
+    font-style: normal;
+    font-weight: normal;
+    /* font-size: 11px; */
+    line-height: 16px;
+    color: #8B8787;
+    margin-right: 50px;
+    padding-top: 10px;
+}
+
+.mr-body-container .title {
+    font-style: normal;
+    font-weight: 600;
+    line-height: 19px;
+    text-align: center;
+    color: #2F970C;
+}
+
+.mr-body-container .match-review-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin-top: 20px;
+}
+
+.mr-body-container .match-review-content p {
+    color: #FFFFFF;
+}
+
 
 /********Available Options**********/
 
@@ -1563,6 +1640,59 @@ body {
 }
 
 
+/***************Register****************/
+
+.reg-form-align {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+
+.reg-form-align .form-control,
+.reg-form-align select {
+    width: 50vw;
+    margin-bottom: 20px;
+    height: 49px;
+    background: #F2F2F2;
+    border-radius: 5px;
+}
+
+.reg-form-align input::placeholder {
+    color: #9F9C9C;
+}
+
+.reg-form-align .form-check {
+    position: relative;
+    left: 20%;
+}
+
+.reg-form-align .form-check-label {
+    color: #FFFFFF;
+}
+
+.reg-form-align .form-check-label a {
+    color: #2F970C;
+}
+
+.reg-form-align .form-check-label a:hover {
+    color: #FFFFFF;
+}
+
+.reg-form-align .form-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    margin-top: 40px;
+}
+
+.reg-form-align .reg-btn {
+    padding: 10px 100px;
+    align-self: center;
+}
+
+
 /***************Responsiveness****************/
 
 @media (max-width: 425px) {
@@ -1573,6 +1703,9 @@ body {
         display: none;
     }
     .wrapper {
+        display: none;
+    }
+    .control-dots {
         display: none;
     }
     /*******Header*******/
@@ -1872,10 +2005,15 @@ body {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: space-around;
+    }
+    .mr-loader {
+        top: 30px;
+        left: 0%;
     }
     .mobile-card-container {
-        margin-bottom: 15px;
+        /* width: 100%; */
+        margin-bottom: 30px;
     }
     .mobile-card-container img {
         width: 107px;
@@ -1958,7 +2096,7 @@ body {
         border-radius: 5px;
     }
     .mobile-converter-wrapper .mobile-converter-container .converter-form input::placeholder,
-    .mobile-converter-wrapper .mobile-converter-container .converter-form select::selection {
+    .mobile-converter-wrapper .mobile-converter-container .converter-form select {
         font-style: normal;
         font-weight: normal;
         font-size: 12px;
@@ -1966,7 +2104,316 @@ body {
         text-align: center;
         color: #C4C4C4;
     }
+    .mobile-converter-wrapper .mobile-converter-container .converter-form input,
+    .mobile-converter-wrapper .mobile-converter-container .converter-form select {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 18px;
+        color: #333333;
+    }
     .mobile-converter-wrapper .mobile-converter-container .btn-convert:hover {
         color: #2F970C;
+    }
+    /*****Punters Tips*****/
+    .mobile-date-search {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .mobile-date-search .date-sort .row {
+        flex-wrap: nowrap !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+    .mobile-date-search .date-sort .date-label {
+        font-size: 11px;
+        font-weight: bold;
+        color: #FFFFFF;
+        position: relative;
+        top: 5px;
+        right: 5px;
+    }
+    .mobile-date-search .date-sort .sort-date {
+        width: 100px;
+        height: 24px;
+        font-size: 11px;
+        text-align: center;
+        background-color: #EAE9E9;
+        border: 1px solid #EAE9E9 !important;
+        position: relative;
+        left: -30px;
+    }
+    .mobile-date-search .search .input-group {
+        width: 100px;
+        height: 25px;
+        border: 1px solid #EAE9E9;
+        position: relative;
+        top: -2px;
+        right: 10px;
+        border-radius: 5px;
+        background-color: #EAE9E9;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+    }
+    .mobile-date-search .search .input-group .search-input {
+        width: 80px;
+        height: 25px;
+        background-color: transparent;
+        border: none;
+        font-size: 10px;
+        text-align: center;
+    }
+    .mobile-date-search .search .input-group .input-group-prepend .iconify {
+        position: relative;
+        top: 3px;
+    }
+    .punters-tips-table table thead tr {
+        height: 70px;
+    }
+    .punters-tips-table table thead tr th {
+        font-size: 13px;
+    }
+    .punters-tips-table table tbody tr td {
+        font-size: 11px;
+    }
+    .pagination-nav {
+        margin-left: 10px !important;
+    }
+    /*****Match Reviews*******/
+    .mobile-matchreview-header-text {
+        color: #2F970C;
+        text-align: center;
+        font-weight: bold;
+        position: relative;
+        top: -150px;
+    }
+    .mobile-matchreview-header-text span {
+        color: #F06E0C;
+    }
+    .mobile-matchreview-body {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-bottom: 20px;
+        margin-top: -80px;
+    }
+    .mobile-matchreview-body .match-review-card-container {
+        margin-bottom: 25px;
+    }
+    .load-more {
+        margin: 20px auto;
+    }
+    .mobile-image-holder img {
+        width: 100vw;
+    }
+    .mobile-author-date {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .mobile-author-date .author,
+    .mobile-author-date .date {
+        font-size: 12px;
+        color: #8B8787;
+        padding-top: 10px;
+    }
+    .mr-body-container .title {
+        font-size: 25px;
+        line-height: normal;
+    }
+    .mr-body-container p {
+        font-size: 12px;
+    }
+    .mobile-bet-term-header {
+        width: 100vw;
+        height: 150px;
+        background: #121C1D;
+    }
+    .mobile-term-header-text {
+        color: #2F970C;
+        text-align: center;
+        font-weight: bold;
+        padding-top: 25px;
+        font-size: 40px;
+    }
+    .mobile-term-header-text span {
+        color: #F06E0C;
+    }
+    .mobile-bet-term-body {
+        margin-top: 20px;
+    }
+    .mobile-bet-term-body .match-review-card-container {
+        margin-bottom: 10px;
+    }
+    /******Sign In********/
+    .auth-container {
+        height: 100vh;
+        overflow-x: hidden;
+    }
+    .auth-img {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+    }
+    .auth-intro {
+        margin-top: 20px;
+    }
+    .auth-title {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 21px;
+        color: #FFFFFF;
+        text-align: center;
+    }
+    .auth-body {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 16px;
+        text-align: center;
+        color: #FFFFFF;
+        padding: 20px 40px;
+    }
+    .auth-btns {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+    }
+    .auth-btns .auth-signup {
+        background: #F06E0C;
+        border-radius: 5px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 19px;
+        padding: 7px 28px;
+        color: #FFFFFF;
+        margin-right: 20px;
+        border: 1px solid #F06E0C;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+    }
+    .auth-btns .auth-login {
+        padding: 7px 28px;
+        color: #FFFFFF;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 19px;
+        background: #2F970C;
+        border: 1px solid #2F970C;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+    }
+    .auth-form {
+        padding: 32px 35px 64px 30px;
+    }
+    .auth-form input,
+    .auth-form select {
+        height: 49px;
+        background: #F2F2F2;
+        border-radius: 5px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        border: 1px solid #F2F2F2;
+        line-height: 19px;
+        color: #9F9C9C;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+    }
+    .auth-form input::placeholder {
+        color: #9F9C9C;
+    }
+    .auth-form-header h3 {
+        text-align: left;
+        font-size: 20px;
+        font-weight: bold;
+        color: #333333;
+        padding-bottom: 10px;
+    }
+    .auth-form-header p {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 18px;
+        color: #797979;
+    }
+    .auth-check {
+        position: relative;
+        top: -15px;
+    }
+    .auth-check-label {
+        font-size: 10px;
+    }
+    .auth--btn {
+        border: none;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 30px;
+        color: #FFFFFF;
+        width: 100%;
+        padding-bottom: 10px;
+        padding-top: 9px;
+        margin-top: 15px;
+        border-radius: 5px;
+    }
+    .auth-misc-link {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 18px;
+        color: #797979;
+        text-align: center;
+        margin-top: 7px;
+    }
+    .auth-misc-link .login {
+        color: #2F970C;
+    }
+    .auth-misc-link .signup {
+        color: #F06E0C;
+    }
+    .forgot-pwd {
+        color: #F06E0C;
+        text-align: center;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .alert-box {
+        z-index: 1000;
+        left: 33% !important;
+    }
+    .btn-green:hover {
+        background-color: #2F970C;
+    }
+    .btn-orange:hover {
+        background-color: #F06E0C;
+    }
+    /******Dashboard******/
+    .mobile-cards {
+        padding: 5px 15px;
+    }
+    .mobile-cards .dashboard-card {
+        margin-bottom: 10px;
+    }
+    .admin-post a {
+        font-size: 12px;
     }
 }

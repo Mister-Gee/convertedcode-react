@@ -7,7 +7,7 @@ const ConvertForm = () => {
                 <div className="title-underline"></div>
                 <div className="converter-form">
                     <div className="form-group">
-                        <label for="betcode">Booking Code:</label>
+                        <label htmlFor="betcode">Booking Code:</label>
                         <input 
                             type="email" 
                             className="form-control" 
@@ -15,27 +15,27 @@ const ConvertForm = () => {
                             placeholder="Enter Booking Code Here"
                         />
                     </div>
-                    <div class="form-group">
-                        <label for="convertFrom">Convert From:</label>
-                        <select class="form-control" id="convertFrom">
+                    <div className="form-group">
+                        <label htmlFor="convertFrom">Convert From:</label>
+                        <select className="form-control" id="convertFrom">
                             <option value="Bet9ja">Bet9ja</option>
                             <option value="Betking">Betking</option>
                             <option value="SportyBet">SportyBet</option>
                             <option value="22Bet">22Bet</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="convertTo">Convert To:</label>
-                        <select class="form-control" id="convertFrom">
+                    <div className="form-group">
+                        <label htmlFor="convertTo">Convert To:</label>
+                        <select className="form-control" id="convertFrom">
                             <option value="Bet9ja">Bet9ja</option>
                             <option value="Betking">Betking</option>
                             <option value="SportyBet">SportyBet</option>
                             <option value="22Bet">22Bet</option>
                         </select>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                        <label class="form-check-label" for="defaultCheck1">
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                        <label className="form-check-label" htmlFor="defaultCheck1">
                             Agree to our <Link to="/terms-conditions">Terms {"&"} Conditions</Link>
                         </label>
                     </div>

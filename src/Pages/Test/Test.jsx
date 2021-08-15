@@ -7,7 +7,7 @@ const Test = () => {
 const[data, setData] = useState([])
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:443/api/getPaymentData')
+        axios.get('https://api.convertedcode.com/api/getPaymentData')
         .then(resp => {
             console.log(resp)
             setData(resp.data)

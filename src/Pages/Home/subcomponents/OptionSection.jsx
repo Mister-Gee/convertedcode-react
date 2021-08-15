@@ -1,8 +1,48 @@
 import {Table} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import { useState, useEffect } from 'react';
+import {getLatestAvailableLeague} from '../../../services/availableLeagueServices';
+import {getLatestAvailableOptions} from '../../../services/availableOptionServices';
+import Loader from "react-js-loader";
 
 const OptionSection = () => {
+    const [isLeagueLoading, setIsLeagueLoading] = useState(true)
+    const [isOptionLoading, setIsOptionLoading] = useState(true)
+
+    const [leagues, setLeagues] = useState("")
+    const [options, setOptions] = useState("")
+
+    useEffect(() => {
+        const fetch = async () => {
+            try{
+                const res = await getLatestAvailableLeague()
+                setLeagues(res.data.data)
+                setIsLeagueLoading(false)
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+        fetch()
+    }, 
+    [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            try{
+                const res = await getLatestAvailableOptions()
+                setOptions(res.data.data)
+                setIsOptionLoading(false)
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+        fetch()
+    }, 
+    [])
+
     return (
         <div className="option-container">
            <div className="option-header">
@@ -29,45 +69,22 @@ const OptionSection = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1x2</td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
+                        {isOptionLoading 
+                            ?
+                            <div className={"mr-loader"}>
+                                <Loader type="bubble-scale" bgColor={"#2F970C"} size={50} />
+                            </div>
+                            :
+                            options.map(data => (
+                            <tr key={data.id}>
+                                <td>{data.option}</td>
+                                <td>{data.bet9ja === "true" ? <span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span> : <span style={{fontSize: 14, color: "red"}} className="iconify" data-icon="uim:times-circle"></span>}</td>
+                                <td>{data.betking === "true" ? <span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span> : <span style={{fontSize: 14, color: "red"}} className="iconify" data-icon="uim:times-circle"></span>}</td>
+                                <td>{data.sportybet === "true" ? <span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span> : <span style={{fontSize: 14, color: "red"}} className="iconify" data-icon="uim:times-circle"></span>}</td>
+                                <td>{data.bet22 === "true" ? <span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span> : <span style={{fontSize: 14, color: "red"}} className="iconify" data-icon="uim:times-circle"></span>}</td>
                             </tr>
-
-                            <tr>
-                                <td>Double Chance</td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Over/Under</td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                            </tr>
-                            
-                            <tr>
-                                <td>DNB</td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Handicap</td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                            </tr>
+                            ))
+                            }
                         </tbody>
                     </Table>
                 </Scrollbars>
@@ -90,30 +107,19 @@ const OptionSection = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Football</td>
-                            <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                        </tr>
-
-                        <tr>
-                            <td>EliteSerien (Norway)</td>
-                            <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                        </tr>
-
-                        <tr>
-                            <td>Allsvenskan (Sweden)</td>
-                            <td><span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                        </tr>
-
-                        <tr>
-                            <td>BasketBall</td>
-                            <td><span className="coming-soon">Coming Soon</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>Hockey</td>
-                            <td><span className="coming-soon">Coming Soon</span></td>
-                        </tr>
+                        {isLeagueLoading 
+                            ?
+                            <div className={"mr-loader"}>
+                                <Loader type="bubble-scale" bgColor={"#FFFFFF"} size={50} />
+                            </div>
+                            :
+                            leagues.map(data => (
+                                <tr key={data.id}>
+                                    <td>{data.league}</td>
+                                    <td>{data.status === "true" ? <span style={{fontSize: 12}} className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span> : <span style={{fontSize: 14, color: "red"}} className="iconify" data-icon="uim:times-circle"></span>}</td>
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </Table>
                 <div className="table-btn-section">

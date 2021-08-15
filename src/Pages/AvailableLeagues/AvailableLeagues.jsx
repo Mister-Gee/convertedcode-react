@@ -1,14 +1,40 @@
 import Frame from "../Components/Frame";
 import {Helmet} from "react-helmet";
 import {Container, Row, Col, Table} from "react-bootstrap";
+import { useState, useEffect } from 'react';
+import {getAvailableLeagues} from '../../services/availableLeagueServices';
+import ContentLoader from '../Components/ContentLoader';
+
 
 const AvailableLeagues = () => {
+    const [isLoading, setIsLoading] = useState(true)
+
+    const [leagues, setLeagues] = useState([])
+
+    useEffect(() => {
+        const fetch = async () => {
+            try{
+                const res = await getAvailableLeagues()
+                setLeagues(res.data.data)
+                setIsLoading(false)
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+        fetch()
+    }, 
+    [])
+
     return (
         <Frame>
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>Available Leagues | ConvertedCode</title>
             </Helmet>
+            {isLoading ?
+            <ContentLoader/>
+            :
             <Container fluid className="wrapper">
                 <Row className="pt-5 ml-n5 mr-n4">
                     <Col lg={12}>
@@ -57,10 +83,13 @@ const AvailableLeagues = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Football</td>
-                                            <td><span className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span></td>
-                                        </tr>
+                                    {leagues.map(data => (
+                                            <tr key={data.id}>
+                                                <td>{data.league}</td>
+                                                <td>{data.status === "true" ? <span className="iconify" data-icon="emojione:white-heavy-check-mark" data-inline="false"></span> : <span style={{color: "red"}} className="iconify" data-icon="uim:times-circle"></span>}</td>
+                                            </tr>
+                                        ))
+                                    }
                                     </tbody>
                                 </Table>
                             </div>
@@ -81,6 +110,7 @@ const AvailableLeagues = () => {
                     </Col>
                 </Row>
             </Container>
+            }
         </Frame>
     )
 }

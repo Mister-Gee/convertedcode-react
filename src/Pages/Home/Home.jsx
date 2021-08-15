@@ -52,7 +52,7 @@ const Home = () => {
                 <div className="mobile-home-mr-wrapper">
                     <div className="header">
                         <div className="title">Match Review</div>
-                        <div className="link"> <Link to="./match-review">View All</Link> </div>
+                        <div className="link"> <Link to="./match-reviews">View All</Link> </div>
                     </div>
                     <MobileMatchReview />
                 </div>

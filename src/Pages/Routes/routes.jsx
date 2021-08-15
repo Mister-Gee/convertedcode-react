@@ -6,6 +6,7 @@ import PuntersTips from '../PuntersTips/PuntersTips';
 import AvailableOptions from '../AvailableOptions/AvailableOptions';
 import AvailableLeagues from '../AvailableLeagues/AvailableLeagues';
 import BetTerminologies from '../BetTerminologies/BetTerminologies';
+import Terminology from '../BetTerminologies/Terminology';
 import ErrorPage from '../ErrorPage/ErrorPage';
 import AboutUs from '../AboutUs/AboutUs';
 import FAQ from '../FAQ/FAQ';
@@ -15,11 +16,14 @@ import Dashboard from '../Dashboard/Dashboard';
 import SubscriptionPlans from '../SubscriptionPlans/SubscriptionPlans';
 import Support from '../Support/Support';
 import Test from '../Test/Test';
-
+import Register from '../Register/Register';
 
 const Routes = () => {
     return (
         <Switch>
+            <Route path="/register">
+                <Register />
+            </Route>
             <Route path="/test">
                 <Test />
             </Route>
@@ -44,6 +48,9 @@ const Routes = () => {
             <Route path="/terms-conditions">
                 <TermsAndConditions />
             </Route>
+            <Route path="/terminology/:id">
+                <Terminology />
+            </Route>
             <Route path="/bet-terminologies">
                 <BetTerminologies />
             </Route>
@@ -53,7 +60,7 @@ const Routes = () => {
             <Route path="/available-options">
                 <AvailableOptions />
             </Route>
-            <Route path="/match-review">
+            <Route path="/match-review/:id">
                 <MatchReview />
             </Route>
             <Route path="/match-reviews">

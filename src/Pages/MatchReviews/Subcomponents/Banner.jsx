@@ -4,7 +4,9 @@ const Banner = () => {
     return (
         <div className="banner-wrapper">
             <div className="carousel-section">
-                <MatchReviewCarousel />
+                <MatchReviewCarousel 
+                    width="90%"
+                />
             </div>
             <div className="title-header">
                 <span className="head">

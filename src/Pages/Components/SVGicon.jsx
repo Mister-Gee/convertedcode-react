@@ -2,9 +2,9 @@ export const HamburgerBarsIcon = () => {
     return (
         <span>
             <svg width="40" height="32" viewBox="0 0 40 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1H19" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
-                <path d="M1 8H13" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
-                <path d="M1 15H16" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                <path d="M1 1H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M1 8H13" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M1 15H16" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
             </svg>
         </span>
     )
