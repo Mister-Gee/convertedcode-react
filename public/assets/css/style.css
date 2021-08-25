@@ -85,6 +85,90 @@ body {
     padding: 5px 50px !important;
 }
 
+.bonus-text {
+    color: #2F970C;
+}
+
+
+/********Converter Modal***********/
+
+.converter-modal .modal-content {
+    height: 400px;
+    background: #363A43;
+}
+
+.converter-modal .modal-content .modal-header {
+    border: none !important;
+}
+
+.converter-modal .modal-content .modal-header .h4 {
+    color: #C2C2C2;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.converter-modal .modal-content .modal-header .close span {
+    color: #C2C2C2;
+}
+
+.converter-modal .modal-content .modal-body {
+    padding: 10px 50px;
+}
+
+.converter-modal .modal-content .modal-body .text {
+    color: #C2C2C2;
+    font-size: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.converter-modal .modal-content .modal-body .text .copy {
+    cursor: pointer;
+}
+
+.converter-modal .modal-content .modal-body .text span {
+    font-weight: bold;
+}
+
+.converter-modal .modal-content .modal-body .text .success {
+    color: #2F970C;
+}
+
+.converter-modal .modal-content .modal-body .text .fail,
+.converter-modal .modal-content .modal-body .text-error {
+    color: rgb(226, 58, 58);
+}
+
+.converter-modal .modal-content .modal-body .unavailable {
+    margin-top: 20px;
+}
+
+.converter-modal .modal-content .modal-body .unavailable .unavailable-header {
+    color: #C2C2C2;
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.converter-modal .modal-content .modal-body .unavailable .game {
+    margin-bottom: -2px;
+}
+
+.loading-game {
+    position: relative;
+    top: 20%;
+}
+
+.initerror {
+    color: #C2C2C2;
+    font-size: 20px;
+    text-align: center;
+}
+
+.initerror a {
+    color: #2F970C;
+}
+
 
 /************Header****************/
 
@@ -1708,6 +1792,9 @@ body {
     .control-dots {
         display: none;
     }
+    .loading-game .loader {
+        background: transparent;
+    }
     /*******Header*******/
     .mobile-header {
         display: block;
@@ -2091,28 +2178,43 @@ body {
     }
     .mobile-converter-wrapper .mobile-converter-container .converter-form input,
     .mobile-converter-wrapper .mobile-converter-container .converter-form select {
-        border: 1px solid #EAEAEA;
+        border: 1px solid #9F9C9C;
+        height: 49px;
+        background: #EAEAEA;
         box-sizing: border-box;
         border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
     }
     .mobile-converter-wrapper .mobile-converter-container .converter-form input::placeholder,
     .mobile-converter-wrapper .mobile-converter-container .converter-form select {
         font-style: normal;
         font-weight: normal;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 18px;
         text-align: center;
-        color: #C4C4C4;
+        color: #9F9C9C;
     }
     .mobile-converter-wrapper .mobile-converter-container .converter-form input,
     .mobile-converter-wrapper .mobile-converter-container .converter-form select {
         font-style: normal;
         font-weight: normal;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 18px;
-        color: #333333;
+        color: #9F9C9C;
     }
     .mobile-converter-wrapper .mobile-converter-container .btn-convert:hover {
+        color: #2F970C;
+    }
+    .mob-converter .form-check-label {
+        font-size: 12px;
+    }
+    .mob-converter .form-check-input {
+        margin-top: -9px;
+    }
+    .mob-converter .form-check-label a {
         color: #2F970C;
     }
     /*****Punters Tips*****/
@@ -2318,9 +2420,10 @@ body {
         -o-border-radius: 5px;
     }
     .auth-form {
-        padding: 32px 35px 64px 30px;
+        padding: 32px 10px 64px 10px;
     }
     .auth-form input,
+    .converter-input,
     .auth-form select {
         height: 49px;
         background: #F2F2F2;
@@ -2336,7 +2439,8 @@ body {
         -ms-border-radius: 5px;
         -o-border-radius: 5px;
     }
-    .auth-form input::placeholder {
+    .auth-form input::placeholder,
+    .converter-input::-moz-placeholder {
         color: #9F9C9C;
     }
     .auth-form-header h3 {
@@ -2415,5 +2519,43 @@ body {
     }
     .admin-post a {
         font-size: 12px;
+    }
+    /****mobile converter****/
+    .mob-converter .text {
+        color: #333333;
+        font-size: 14px;
+        margin-bottom: 15px;
+        text-align: start;
+    }
+    .mob-converter .text .copy {
+        cursor: pointer;
+    }
+    .mob-converter .text span {
+        font-weight: bold;
+    }
+    .mob-converter .text .success {
+        color: #2F970C;
+    }
+    .mob-converter .text .fail,
+    .mob-converter .text-error {
+        color: rgb(226, 58, 58);
+    }
+    .mob-converter .unavailable {
+        margin-top: 10px;
+    }
+    .mob-converter .unavailable .unavailable-header {
+        color: #333333;
+        font-size: 12px;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .mob-converter .unavailable .game {
+        margin-bottom: -2px;
+    }
+    .goback {
+        font-size: 12px;
+        color: #2F970C;
+        font-weight: bold;
+        cursor: pointer;
     }
 }

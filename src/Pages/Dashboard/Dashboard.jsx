@@ -11,13 +11,18 @@ import AvailableLeagueForm from "./subcomponents/AvailableLeagueForm";
 import AvailableOptionForm from "./subcomponents/AvailableOptionForm";
 import SubscriptionPlanTable from "../Components/SubscriptionPlanTable";
 import {getFromLocalStorage} from '../../utils/Functions';
+import {getUserPlan} from '../../services/dashboardService';
 import { useState } from '@hookstate/core';
 import store from '../../store/store';
+import ContentLoader from "../Components/ContentLoader";
 
 
 const Dashboard = () => {
     let history = useHistory()
-    const [key, setKey] = React.useState('match-review');
+    const [key, setKey] = React.useState('match-review')
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [dashboardReload, setDashboardReload] = React.useState(false)
+
 
     useEffect(() => {
         const token = getFromLocalStorage("returnToken")
@@ -26,36 +31,59 @@ const Dashboard = () => {
                 pathname: "/"
             })
         } 
-    } ,[])
-    
+    }, [])
+
     const {user} = useState(store)
+    const {conversionUnit} = useState(store)
+    const {totalConversions} = useState(store)
+    const {conversionPlan} = useState(store)
+
+    useEffect(() => {
+        try{
+            const fetch = async () => {
+                const res = await getUserPlan(user.get().id)
+                totalConversions.set(res.data.totalConversions)
+                conversionPlan.set(res.data.conversionPlan)
+                conversionUnit.set(res.data.conversionUnit)
+                setIsLoading(false)
+            }
+            fetch()
+        }
+        catch(err){
+            console.log(err)
+        }
+    }, [dashboardReload])
+    
     return (
         <Frame>
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>Dashboard | ConvertedCode</title>
             </Helmet>
+            {isLoading ?
+            <ContentLoader />
+            :
             <>
             <Container fluid className="wrapper">
                 <Row className="pt-5 ml-n5 mr-n4 pl-5 pr-5">
                     <Col lg={4}>
                         <DashboardCard 
                             title="Available Conversion Units"
-                            value={200}
+                            value={conversionUnit.get()}
                             icon="ci:refresh-02"
                         />
                     </Col>
                     <Col lg={4}>
                         <DashboardCard 
                             title="Total Conversions done"
-                            value={12}
+                            value={totalConversions.get()}
                             icon="bi:patch-check-fill"
                         />
                     </Col>
                     <Col lg={4}>
                         <DashboardCard 
                             title="Current Plan"
-                            value="Weekend Plan"
+                            value={conversionPlan.get()}
                             icon="icon-park-outline:tag"
                         />
                     </Col>
@@ -93,7 +121,9 @@ const Dashboard = () => {
                 }
                 <Row className="pt-5 ml-n5 mr-n4 pl-5 pr-5">
                     <Col lg={12}>
-                        <SubscriptionPlanTable />
+                        <SubscriptionPlanTable 
+                            reload={setDashboardReload}
+                        />
                     </Col>
                 </Row>
             </Container>
@@ -101,17 +131,17 @@ const Dashboard = () => {
                 <div className="mobile-cards mt-3">
                     <DashboardCard 
                         title="Available Conversion Units"
-                        value={200}
+                        value={conversionUnit.get()}
                         icon="ci:refresh-02"
                     />
                     <DashboardCard 
                         title="Total Conversions done"
-                        value={12}
+                        value={totalConversions.get()}
                         icon="bi:patch-check-fill"
                     />
                     <DashboardCard 
                         title="Current Plan"
-                        value="Weekend Plan"
+                        value={conversionPlan.get()}
                         icon="icon-park-outline:tag"
                     />
                 </div>
@@ -143,10 +173,13 @@ const Dashboard = () => {
                 </div>
                 }
                 <div className="sub-plans mt-3">
-                    <SubscriptionPlanTable />
+                    <SubscriptionPlanTable 
+                        reload={setDashboardReload}
+                    />
                 </div>
             </div>
             </>
+        }
         </Frame>
     )
 }

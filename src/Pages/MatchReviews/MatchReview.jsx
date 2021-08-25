@@ -43,7 +43,7 @@ const MatchReview = () => {
                     <Col lg={12}>
                         <div className="header-container mt-5 mb-3">
                             <div className="match-review-image">
-                                <img src={`https://www.convertedcode.com/${matchReview.image_dir}`} alt={matchReview.title} />
+                                <img src={`https://api.convertedcode.com/storage/${matchReview.image_dir}`} alt={matchReview.title} />
                             </div>
                             <div className="sub-header-wrapper">
                                 <div className="author-date">

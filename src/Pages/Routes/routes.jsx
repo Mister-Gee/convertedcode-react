@@ -15,7 +15,6 @@ import TermsAndConditions from '../TermsAndConditions/TermsAndConditions';
 import Dashboard from '../Dashboard/Dashboard';
 import SubscriptionPlans from '../SubscriptionPlans/SubscriptionPlans';
 import Support from '../Support/Support';
-import Test from '../Test/Test';
 import Register from '../Register/Register';
 
 const Routes = () => {
@@ -23,9 +22,6 @@ const Routes = () => {
         <Switch>
             <Route path="/register">
                 <Register />
-            </Route>
-            <Route path="/test">
-                <Test />
             </Route>
             <Route path="/support">
                 <Support />

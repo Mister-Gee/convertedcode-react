@@ -5,7 +5,11 @@ const store = createState({
     alertNotification: false,
     alertMessage: '',
     alertType: '',
-    authDrawer: false
+    authDrawer: false,
+    conversionUnit: 0,
+    totalConversions: 0,
+    conversionPlan: "None",
+
 })
 
 export default store;

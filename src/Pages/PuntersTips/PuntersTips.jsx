@@ -108,7 +108,7 @@ const PuntersTips = () => {
             </Container>
             <div className="mobile-wrapper">
                 <div className="mobile-carousel-slider">
-                    <img className="punters-tips-img" src="./assets/images/punters-tips.png" alt="Punters Tips" />
+                    <img className="punters-tips-img" src="/assets/images/punters-tips.png" alt="Punters Tips" />
                 </div>
                 <div className="mobile-date-search mt-4">
                     <div className="date-sort">

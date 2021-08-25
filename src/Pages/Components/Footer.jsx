@@ -1,7 +1,7 @@
 import {Formik} from 'formik';
 import {Link} from 'react-router-dom';
 import { ConvertIcon } from './SVGicon';
-import React, {useCallback, useContext} from 'react';
+import React, {useCallback} from 'react';
 import Drawer from "react-bottom-drawer";
 import MobileConvertForm from './MobileConvertForm';
 import SignUpForm from './MobileAuthForms/SignUpForm';
@@ -15,12 +15,7 @@ const Footer = () => {
     const [isVisible, setIsVisible] = React.useState(false);
     const [authForm, setAuthForm] = React.useState("login");
 
-    const {alertNotification} = useState(store)
-    const {alertMessage} = useState(store)
-    const {alertType} = useState(store)
     const {authDrawer} = useState(store)
-    const {navIconState} = useState(store)
-
 
     const onCloseConverterDrawer = useCallback(() => {
         setIsVisible(false);
@@ -185,6 +180,7 @@ const Footer = () => {
             <Drawer
                 isVisible={isVisible}
                 onClose={onCloseConverterDrawer}
+
                 duration={500}
             >
                 <MobileConvertForm close={onCloseConverterDrawer}/>
@@ -192,6 +188,8 @@ const Footer = () => {
             <Drawer
                 isVisible={authDrawer.get()}
                 onClose={onCloseAuthDrawer}
+                mountOnEnter={false}
+                unmountOnExit={false}
                 duration={500}
             >
                 {authForm === "signup" ?

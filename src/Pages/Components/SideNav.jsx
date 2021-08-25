@@ -54,8 +54,8 @@ const SideNav = () => {
   return (
     <div className="Menu">
       <div className="user">
-          <img src="/assets/images/avatar.png" alt="user" />
-          <div className="user-detail">
+          {/* <img src="/assets/images/avatar.png" alt="user" /> */}
+          <div className="user-detail ml-5">
               <div className="name">{user.get().username ? user.get().username : "User"}</div>
               {/* <div className="action"> 
                 <span className="link">Edit Profile</span>

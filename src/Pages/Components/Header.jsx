@@ -4,13 +4,14 @@ import * as Yup from 'yup';
 import { Nav, NavDropdown, Spinner } from 'react-bootstrap';
 import React,{ useContext, useEffect } from "react";
 import { MenuContext } from "react-flexible-sliding-menu";
-import { HamburgerBarsIcon, CancelIcon } from './SVGicon';
+import { HamburgerBarsIcon} from './SVGicon';
 import {login, logout} from '../../services/authServices';
 import { useState } from '@hookstate/core';
 import store from '../../store/store';
 import AlertNortification from './AlertNortification';
 import jwt_decode from 'jwt-decode';
 import {getFromLocalStorage} from '../../utils/Functions';
+import { getUserPlan } from '../../services/dashboardService';
 import ForgotPassword from './ForgotPassword';
 
 const Header = () => {
@@ -21,8 +22,9 @@ const Header = () => {
     const [userName, setUserName] = React.useState("")
 
     const {user} = useState(store)
-    const {authDrawer} = useState(store)
-
+    const {conversionUnit} = useState(store)
+    const {totalConversions} = useState(store)
+    const {conversionPlan} = useState(store)
 
     useEffect(() => {
        const token = getFromLocalStorage("returnToken")
@@ -36,6 +38,21 @@ const Header = () => {
             setReturnToken(null)
         }
     },[returnToken])
+
+    useEffect(() => {
+        try{
+            const fetch = async () => {
+                const res = await getUserPlan(user.get().id)
+                totalConversions.set(res.data.totalConversions)
+                conversionPlan.set(res.data.conversionPlan)
+                conversionUnit.set(res.data.conversionUnit)
+            }
+            fetch()
+        }
+        catch(err){
+            console.log(err)
+        }
+    }, [])
 
     const {alertNotification} = useState(store)
     const {alertMessage} = useState(store)
