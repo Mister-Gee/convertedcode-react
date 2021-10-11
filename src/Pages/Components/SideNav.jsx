@@ -56,13 +56,15 @@ const SideNav = () => {
       <div className="user">
           {/* <img src="/assets/images/avatar.png" alt="user" /> */}
           <div className="user-detail ml-5">
-              <div className="name">{user.get().username ? user.get().username : "User"}</div>
-              {/* <div className="action"> 
-                <span className="link">Edit Profile</span>
-                <span className="icon">
+              <div className="name">{user.get().username ? user.get().username : "Guest"}</div>
+              <div className="action"> 
+              {user.get().username &&
+                <span className="link">ID: CC-{user.get().id}</span>
+              }
+                {/* <span className="icon">
                     <EditIcon />
-                </span>
-              </div> */}
+                </span> */}
+              </div>
           </div>
       </div>
 

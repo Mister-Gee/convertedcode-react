@@ -35,6 +35,11 @@ body {
     color: #F06E0C;
 }
 
+.pageNum {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 .white {
     color: #FFFFFF;
 }
@@ -72,6 +77,7 @@ body {
     line-height: 19px;
     text-align: center;
     color: #FFFFFF;
+    cursor: pointer;
 }
 
 .load-more-btn:hover {
@@ -120,6 +126,21 @@ body {
     font-size: 15px;
     margin-bottom: 20px;
     text-align: center;
+}
+
+.converter-modal .modal-content .modal-body table thead th {
+    color: #C2C2C2;
+    font-size: 14px;
+}
+
+.converter-modal .modal-content .modal-body table {
+    position: relative;
+    overflow-y: scroll;
+}
+
+.converter-modal .modal-content .modal-body table tbody td {
+    color: #C2C2C2;
+    font-size: 13px;
 }
 
 .converter-modal .modal-content .modal-body .text .copy {
@@ -300,6 +321,10 @@ body {
 
 .link:hover {
     color: #FFFFFF;
+}
+
+.section-image img {
+    height: 90%;
 }
 
 .user,
@@ -570,6 +595,31 @@ body {
 
 .reserved ul li a {
     font-size: 14px;
+}
+
+
+/********Error Page*********/
+
+.error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.errorText {
+    color: #FFFFFF;
+    font-size: 35px;
+}
+
+.errorText span {
+    font-weight: bold;
+}
+
+.goBack {
+    color: #2F970C;
+    margin-top: 20px;
+    cursor: pointer;
 }
 
 
@@ -1300,6 +1350,7 @@ body {
     color: #FFFFFF;
     padding: 1px 2px;
     margin-right: 15px;
+    cursor: pointer;
 }
 
 .pagination-nav .prev:hover,
@@ -1779,7 +1830,7 @@ body {
 
 /***************Responsiveness****************/
 
-@media (max-width: 425px) {
+@media (max-width: 768px) {
     .desktop-header {
         display: none;
     }
@@ -1801,7 +1852,7 @@ body {
         position: sticky;
         top: 0;
         left: 0;
-        max-width: 425px;
+        max-width: 768px;
         height: 52px;
         background: #363A43;
         box-shadow: 0px 4px 10px 10px rgba(0, 0, 0, 0.25);
@@ -1956,7 +2007,7 @@ body {
     }
     .mobile-footer {
         display: flex;
-        max-width: 425px;
+        max-width: 768px;
         height: 259px;
         width: 100%;
         background: #121C1D;
@@ -1987,6 +2038,8 @@ body {
     }
     .mobile-footer .converter-icon-section {
         margin-top: 20px;
+        position: sticky;
+        bottom: 0;
     }
     .mobile-footer .converter-icon-section .icon {
         cursor: pointer;
@@ -2003,6 +2056,10 @@ body {
         -ms-border-radius: 50%;
         -o-border-radius: 50%;
     }
+    .mobile-carousel-slider img,
+    .mobile-bet-term-header img {
+        margin-bottom: 120px;
+    }
     .mobile-footer .converter-icon-section .text {
         font-style: normal;
         font-weight: normal;
@@ -2017,7 +2074,7 @@ body {
         flex-direction: column;
         justify-content: space-between;
         background: #363A43;
-        max-width: 425px;
+        max-width: 768px;
     }
     .slideshow-wrapper .title {
         display: none;
@@ -2549,13 +2606,64 @@ body {
         margin-bottom: 5px;
         font-weight: bold;
     }
+    .mob-converter .unavailable table thead th {
+        color: #333333;
+        font-size: 11px;
+    }
+    .mob-converter .unavailable table tbody td {
+        color: #333333;
+        font-size: 11px;
+    }
     .mob-converter .unavailable .game {
         margin-bottom: -2px;
     }
     .goback {
+        margin-top: 20px;
         font-size: 12px;
         color: #2F970C;
         font-weight: bold;
         cursor: pointer;
+    }
+    /*****Disclaimer****/
+    .disclamer-section {
+        background: transparent;
+        margin-top: 20px;
+    }
+    .disclamer-section .disclamer-body {
+        padding: 23px 17px 25px 17px;
+    }
+    .disclamer-section .disclamer-body .title {
+        font-style: normal;
+        font-size: 12px;
+        line-height: 18px;
+        color: #8B8787;
+    }
+    .disclamer-section .disclamer-body ol {
+        margin-left: -32px;
+    }
+    .disclamer-section .disclamer-body ol li {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 18px;
+        color: #8B8787;
+    }
+    .error {
+        height: 50vh;
+    }
+    .errorText {
+        font-size: 20px;
+    }
+    .errorText span {
+        font-weight: bold;
+    }
+    .goBack {
+        color: #2F970C;
+        margin-top: 20px;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    .goBack:hover {
+        color: #FFFFFF;
     }
 }

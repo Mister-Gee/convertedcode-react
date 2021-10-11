@@ -1,4 +1,4 @@
-import {createBetTerm} from '../../../services/betTermsServices';
+import {credit} from '../../../services/conversionService';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Spinner } from 'react-bootstrap';
@@ -6,30 +6,30 @@ import { useState } from '@hookstate/core';
 import store from '../../../store/store';
 
 
-const BetTermForm = () => {
-    const {user} = useState(store)
+const CreditUnitForm = () => {
     const {alertNotification} = useState(store)
     const {alertMessage} = useState(store)
     const {alertType} = useState(store)
 
     const initialValues = {
-        title: "",
-        content: ""
+        id: "",
+        unit: 0,
+        plan: "",
     }
 
     const onSubmit = async (value) => {
         try{
             const data = new FormData()
-            data.append("title", value.title)
-            data.append("content", value.content)
-            data.append("author", user.get().username)
+            data.append("id", value.id)
+            data.append("unit", value.unit)
+            data.append("plan", value.plan)
 
-            let res = await createBetTerm(data)
-            console.log(res)
+            let res = await credit(data)
+
             const status = res.status
             if(status === 201 && res.data != null){
                 alertType.set("success")
-                alertMessage.set("Bet Terminology Posted Successfully")
+                alertMessage.set("Unit Credited")
                 alertNotification.set(true)
                 setTimeout(() => {
                     alertNotification.set(false)
@@ -45,20 +45,20 @@ const BetTermForm = () => {
             }
         }   
         catch(err) {
-                alertType.set("danger")
-                alertMessage.set(err.message)
-                alertNotification.set(true)
-                setTimeout(() => {
-                    alertNotification.set(false)
-                }, 1000)
+            alertType.set("danger")
+            alertMessage.set("An Error Occured")
+            alertNotification.set(true)
+            setTimeout(() => {
+                alertNotification.set(false)
+            }, 1000)
         }
     }
 
     const validationSchema = Yup.object({
-        title: Yup.string().required("Title is required"),
-        content: Yup.string().required("Body is required")
+        id: Yup.string().required("id is required"),
+        unit: Yup.string().required("Required"),
+        plan: Yup.string().required("Required")
     })
-    
     return (
         <Formik
             initialValues={initialValues}
@@ -80,29 +80,43 @@ const BetTermForm = () => {
                         <input 
                             type="text" 
                             className="form-control" 
-                            placeholder="Title" 
-                            name="title"
+                            placeholder="User ID" 
+                            name="id"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.title}
+                            value={values.id}
                         />
                         <small className="form-text text-danger">
-                            {errors.title && touched.title && errors.title}
+                            {errors.id && touched.id && errors.id}
                         </small>
                     </div>
                     <div className="form-group">
-                        <textarea 
+                        <input 
+                            type="number" 
                             className="form-control" 
-                            placeholder="Message" 
-                            rows="5"
-                            name="content"
+                            placeholder="Amount of Unit" 
+                            name="unit"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.content}
-                            ></textarea>
-                            <small className="form-text text-danger">
-                                {errors.content && touched.content && errors.content}
-                            </small>
+                            value={values.unit}
+                        />
+                        <small className="form-text text-danger">
+                            {errors.unit && touched.unit && errors.unit}
+                        </small>
+                    </div>
+                    <div className="form-group">
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            placeholder="Conversion Plan Name" 
+                            name="plan"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.plan}
+                        />
+                        <small className="form-text text-danger">
+                            {errors.plan && touched.plan && errors.plan}
+                        </small>
                     </div>
                     <div className="mr-btn">
                         <button 
@@ -124,4 +138,4 @@ const BetTermForm = () => {
     )
 }
 
-export default BetTermForm
+export default CreditUnitForm

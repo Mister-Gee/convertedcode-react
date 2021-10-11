@@ -180,7 +180,8 @@ const Footer = () => {
             <Drawer
                 isVisible={isVisible}
                 onClose={onCloseConverterDrawer}
-
+                mountOnEnter={false}
+                unmountOnExit={false}
                 duration={500}
             >
                 <MobileConvertForm close={onCloseConverterDrawer}/>

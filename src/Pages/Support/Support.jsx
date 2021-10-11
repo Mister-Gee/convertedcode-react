@@ -14,7 +14,7 @@ const Support = () => {
                     <Col lg={12}>
                     <div className="punters-tips-table ml-n2">
                         <h3 className="sub-title">Help { "&" } Support</h3>
-                        <p className="help-text"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Atque dolor recusandae iure incidunt fugiat. Alias adipisci odit repellat autem facere quasi. Obcaecati odio quos maiores aut distinctio minus illo eveniet. </p>
+                        <p className="help-text"> Do you have a Complaint or Suggestion, Kindly drop it below. </p>
                         <div className="contact">
                             <form className="pt-3 pl-5 pr-5">
                                 <div className="form-group">

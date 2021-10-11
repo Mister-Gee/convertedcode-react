@@ -9,12 +9,29 @@ import {getPuntersTips} from '../../services/puntersTipsServices';
 const PuntersTips = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [puntersTips, setPuntersTips] = useState([])
+    const [page, setPage] = useState(1)
+    const [currentPage, setCurrentPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(0)
+
+    function goToNextPage() {
+        if(page < totalPages){
+            setPage(page + 1)
+        }
+     }
+   
+     function goToPreviousPage() {
+        if(page > 1){
+            setPage(page - 1)
+        }
+     }
 
     useEffect(() => {
         const fetch = async () => {
             try {
-                const res = await getPuntersTips()
+                const res = await getPuntersTips(page)
                 setPuntersTips(res.data.data)
+                setTotalPages(res.data.links.length - 2)
+                setCurrentPage(res.data.current_page)
                 setIsLoading(false)
             }
             catch(err){
@@ -22,8 +39,8 @@ const PuntersTips = () => {
             }
         }
         fetch()
-    } ,[])
-
+    } ,[page])
+    
     return (
         <Frame>
             <Helmet>
@@ -37,7 +54,7 @@ const PuntersTips = () => {
             <Container fluid className="wrapper">
                 <Row className="pt-5 ml-n5 mr-n4">
                     <Col lg={12}>
-                        <img className="punters-tips-img" src="./assets/images/punters-tips.png" alt="Punters Tips" />
+                        <img className="punters-tips-img" src="./assets/images/punters-tips.jpg" alt="Punters Tips" />
                     </Col>
                 </Row>
                 <Row className="mt-3 pt-5">
@@ -95,20 +112,24 @@ const PuntersTips = () => {
                 <Row className="mt-3">
                     <Col lg={4}>
                         <div className="pagination-nav">
-                            <span className="prev">
+                            {page > 1 &&
+                            <span className="prev" onClick={goToPreviousPage}>
                                 <span className="iconify" data-icon="ant-design:caret-left-outlined" data-inline="false"></span>
                                 Prev
                             </span>
-                            <span className="current">1</span>
-                                <span className="next">Next <span className="iconify" data-icon="ant-design:caret-right-outlined" data-inline="false"></span>
+                            }
+                            <span className="current">{page !== totalPages && currentPage}</span>
+                            {page !== totalPages &&
+                                <span className="next" onClick={goToNextPage}>Next <span className="iconify" data-icon="ant-design:caret-right-outlined" data-inline="false"></span>
                             </span>
+                            }
                         </div>
                     </Col>
                 </Row>
             </Container>
             <div className="mobile-wrapper">
-                <div className="mobile-carousel-slider">
-                    <img className="punters-tips-img" src="/assets/images/punters-tips.png" alt="Punters Tips" />
+                <div className="mobile-carousel-slider-punter">
+                    <img className="punters-tips-img" src="/assets/images/punters-tips.jpg" alt="Punters Tips" />
                 </div>
                 <div className="mobile-date-search mt-4">
                     <div className="date-sort">
@@ -151,13 +172,17 @@ const PuntersTips = () => {
                     </Table>
                 </div>
                 <div className="pagination-nav mt-3 mb-3">
-                    <span className="prev">
+                    {page > 1 &&
+                    <span className="prev"  onClick={goToPreviousPage}>
                         <span className="iconify" data-icon="ant-design:caret-left-outlined" data-inline="false"></span>
                         Prev
                     </span>
-                    <span className="current">1</span>
-                        <span className="next">Next <span className="iconify" data-icon="ant-design:caret-right-outlined" data-inline="false"></span>
+                    }
+                    <span className="current">{page !== totalPages && currentPage}</span>
+                    {page !== totalPages &&
+                        <span className="next"  onClick={goToNextPage}>Next <span className="iconify" data-icon="ant-design:caret-right-outlined" data-inline="false"></span>
                     </span>
+                    }
                 </div>
             </div>
             </>

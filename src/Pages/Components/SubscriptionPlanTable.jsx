@@ -1,13 +1,12 @@
 import {Table} from 'react-bootstrap';
 import { usePaystackPayment } from 'react-paystack';
 import React, {useEffect} from 'react';
-import {paymentInit, subscribe, confirmPayment} from '../../services/paymentService';
+import {paymentInit, confirmPayment} from '../../services/paymentService';
 import { useState } from '@hookstate/core';
 import store from '../../store/store';
 
-const SubscriptionPlanTable = ({reload}) => {
+const SubscriptionPlanTable = ({reload, loader}) => {
     const[data, setData] = React.useState({})
-
 
     const {user} = useState(store)
 
@@ -93,13 +92,12 @@ const SubscriptionPlanTable = ({reload}) => {
         // Implementation for whatever you want to do with reference and after success call.
         if(reference.status === "success"){
             const confirm = async () => {
+                loader(true)
                 try{
                     const res = await confirmPayment(reference.reference)
                     if(res.status === 200 && res.data.msg === "success"){
-                        const res = await subscribe(user.get().id)
-                        if(res.status === 200){
-                            reload(true)
-                        }
+                        loader(false)
+                        reload(true)  
                     }
                 }
                 catch(err){
@@ -125,7 +123,7 @@ const SubscriptionPlanTable = ({reload}) => {
     return (
         <div className="punters-tips-table ml-n2">
             <h3 className="sub-title">Subscription Plans</h3>
-            {/* <Table striped hover variant="dark" size="sm">
+            <Table striped hover variant="dark" size="sm">
                 <thead>
                     <tr>
                     <th> <span className="punter">Plans</span></th>
@@ -211,7 +209,7 @@ const SubscriptionPlanTable = ({reload}) => {
                         </td>
                     </tr>
                 </tbody>
-            </Table> */}
+            </Table>
         </div>
     )
 }

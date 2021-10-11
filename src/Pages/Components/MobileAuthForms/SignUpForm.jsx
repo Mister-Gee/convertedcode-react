@@ -39,7 +39,6 @@ const SignUpForm = ({loginAction}) => {
                     let res = await register(value)
                     const status = res.status
                     const data = res.data
-                    console.log(res)
                     if(status === 201 && data != null){
                         localStorage.setItem("accessToken", data.token)
                         localStorage.setItem("returnToken", data.returnToken)
@@ -48,12 +47,13 @@ const SignUpForm = ({loginAction}) => {
                         alertType.set("success")
                         alertMessage.set("Registeration Successful")
                         alertNotification.set(true)
+                        authDrawer.set(false)
                         setTimeout(() => {
                             alertNotification.set(false)
                             history.push({
                                 pathname: "/dashboard"
                             })
-                        }, 1500)   
+                        }, 500)   
                         // setReturnToken(data.returnToken)
                     }
                     else{

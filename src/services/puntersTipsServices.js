@@ -1,6 +1,9 @@
 import { http } from './httpService';
 
-export const getPuntersTips = () => {
+export const getPuntersTips = (page) => {
+    if (page) {
+        return http.get(`/punters-tips?page=${page}`)
+    }
     return http.get("/punters-tips")
 }
 

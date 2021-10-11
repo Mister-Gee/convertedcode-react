@@ -74,5 +74,27 @@ export const dateToInputDate = (format) => {
 }
 
 export const reduceContentDisplay = (str) => {
-    return str.substring(0, 80);
+    const result = str.substring(0, 80);
+    const a = result.replace("<b>", " ")
+    const b = a.replace("</b>", " ")
+    const c = b.replace("</br>", " ")
+    return c;
+}
+
+export const dayToString = (val) => {
+    if (val === 0) {
+        return "Sunday"
+    } else if (val === 1) {
+        return "Monday"
+    } else if (val === 2) {
+        return "Tuesday"
+    } else if (val === 3) {
+        return "Wednesday"
+    } else if (val === 4) {
+        return "Thursday"
+    } else if (val === 5) {
+        return "Friday"
+    } else if (val === 6) {
+        return "Saturday"
+    }
 }

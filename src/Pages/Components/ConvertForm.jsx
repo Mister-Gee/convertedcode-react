@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import React from 'react';
 import { Formik } from 'formik';
+import {Table} from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useState } from '@hookstate/core';
 import {convert} from '../../services/conversionService';
@@ -18,6 +19,7 @@ const ConvertForm = () => {
 
     const [modalShow, setModalShow] = React.useState(false)
     const [initError, setInitError] = React.useState("")
+    const [conversionState, setConversionState] = React.useState(false)
 
     const [totalGames, setTotalGames] = React.useState("")
     const [totalGamesConverted, setTotalGamesConverted] = React.useState("")
@@ -35,7 +37,7 @@ const ConvertForm = () => {
     const {alertMessage} = useState(store)
     const {alertType} = useState(store)
     const {conversionUnit} = useState(store)
-
+    const {conversionPlan} = useState(store)
 
     const initialValues = {
         code: "",
@@ -43,83 +45,98 @@ const ConvertForm = () => {
         to: "Bet9ja" 
     }
 
+    const todaysDateObject = new Date()
+    const today = todaysDateObject.getDay()
+
     const onSubmit =  async (data) => {
         if(user.get().username){
             if(tc){
               if(conversionUnit.get() > 0){
-                setConversionError("")
-                setGame("")
-                setTotalGames("")
-                setTotalGamesConverted("")
-                setBetCode("")
-                setGameStatus("")
-                setIsConverting(true)
-                setModalShow(true)
-                const socket = io(REACT_APP_CONVERTEDCODE_SOCKET_URL, { reconnection: false }, { reconnectionDelay: 100000 }, { transports: ['websocket', 'polling'] }, { forceNew: false }, { reconnectionDelayMax: 100000, })
-                socket.on('connect', function() {
-                    socket.emit('my event', data);
-                    alertType.set("success")
-                    alertMessage.set("Conversion Started...")
-                    alertNotification.set(true)
-                    setTimeout(() => {
-                        alertNotification.set(false)  
-                    }, 3000)
-                })
-                
-                socket.on('error', function(data) {
-                    setConversionError(data['error'])
-                    console.log(data['error'])
-                    alertType.set("danger")
-                    alertMessage.set("Conversion Error")
-                    alertNotification.set(true)
-                    socket.disconnect()
-                    setTimeout( () => {
-                        alertNotification.set(false)  
-                    }, 3000)
-                    setIsConverting(false)
-                })
-                socket.on('game', function(data) {
-                    setTotalGames(data['game'])
-                    console.log(data['game'])
-                    setIsConverting(false)
-                })
-                socket.on('my response', function(data) {
-                    // setGame(" ")
-                    // setGameStatus(" ")
-                    setGame(data['my response'])
-                    console.log(data['my response'])   
-                    setIsConverting(false)
-                })
-                socket.on('status', function(data) {
-                    // setGameStatus(" ")
-                    setGameStatus(data['status'])
-                    console.log(data['status'])
-                    setIsConverting(false)
-                })
-                socket.on('totalsuccess', function(data) {
-                    setTotalGamesConverted(data['totalsuccess'])
-                    console.log(data['totalsuccess'])
-                    setIsConverting(false)
-                })
-                socket.on('bcode', function(data) {
-                    setBetCode(data['bcode'])
-                    console.log(data['bcode'])
-                    setIsConverting(false)
-                })
-                socket.on('unavailable', function(data) {
-                    setUnavailableGamesAndOptions(data['unavailableGamesAndOptions'])
-                    console.log(data['unavailableGamesAndOptions'])
-                    setIsConverting(false)
-                })
-                socket.on('disconnect', async () => {
-                    await convert(user.get().id)
-                    alertType.set("success")
-                    alertMessage.set("Conversion Completed")
-                    alertNotification.set(true)
-                    setTimeout(() => {
-                        alertNotification.set(false)  
-                    }, 3000)
-                })
+                  if(data.from !== data.to){
+                          if(((conversionPlan.get() === "Weekends" || conversionPlan.get() === "Weekend") && (today === 5 || today === 6 || today === 0 )) ||  conversionPlan.get() === "Daily" || conversionPlan.get() === "Monthly" || conversionPlan.get() === "1 Month" || conversionPlan.get() === "Premium" || conversionPlan.get() === "Ghost Plan" || conversionPlan.get() === "Ghost Plan II" || conversionPlan.get() === "Admin Plan"){
+                            setInitError("")
+                            setConversionState(false)
+                            setConversionError("")
+                            setGame("")
+                            setTotalGames("")
+                            setTotalGamesConverted("")
+                            setBetCode("")
+                            setGameStatus("")
+                            setUnavailableGamesAndOptions([])
+                            setInitError("")
+                            setIsConverting(true)
+                            setModalShow(true)
+                            const socket = io(REACT_APP_CONVERTEDCODE_SOCKET_URL, { reconnection: false }, { reconnectionDelay: 100000 }, { transports: ['websocket', 'polling'] }, { forceNew: false }, { reconnectionDelayMax: 100000, })
+                            socket.on('connect', function() {
+                                socket.emit('my event', data);
+                                alertType.set("success")
+                                alertMessage.set("Conversion Started...")
+                                alertNotification.set(true)
+                                setTimeout(() => {
+                                    alertNotification.set(false)  
+                                }, 3000)
+                            })
+                            
+                            socket.on('error', function(data) {
+                                setConversionError(data['error'])
+                                alertType.set("danger")
+                                alertMessage.set("Conversion Error")
+                                alertNotification.set(true)
+                                socket.disconnect()
+                                setTimeout( () => {
+                                    alertNotification.set(false)  
+                                }, 3000)
+                                setIsConverting(false)
+                            })
+                            socket.on('game', async (data) => {
+                                setTotalGames(data['game'])
+                                await convert(user.get().id)
+                                setIsConverting(false)
+                            })
+                            socket.on('my response', function(data) {
+                                setGame(" ")
+                                setGameStatus(" ")
+                                setGame(data['my response']) 
+                                setIsConverting(false)
+                            })
+                            socket.on('status', function(data) {
+                                setGameStatus(" ")
+                                setGameStatus(data['status'])
+                                setIsConverting(false)
+                            })
+                            socket.on('totalsuccess', function(data) {
+                                setTotalGamesConverted(data['totalsuccess'])
+                                setIsConverting(false)
+                            })
+                            socket.on('bcode', function(data) {
+                                setBetCode(data['bcode'])
+                                setConversionState(true)
+                                setIsConverting(false)
+                            })
+                            socket.on('unavailable', function(data) {
+                                setUnavailableGamesAndOptions(data['unavailableGamesAndOptions'])
+                                setIsConverting(false)
+                            })
+                            socket.on('disconnect', () => {
+                                alertType.set("success")
+                                alertMessage.set("Conversion Completed")
+                                alertNotification.set(true)
+                                setTimeout(() => {
+                                    alertNotification.set(false)  
+                                }, 3000)
+                            })
+                          }
+                          else{
+                                setModalShow(true)
+                                setInitError("Conversion restricted: Your Plan only limited to weekends")
+                                setIsConverting(false)
+                          }
+                }
+                else{
+                    setModalShow(true)
+                    setInitError("You Can't convert to the same bookie")
+                    setIsConverting(false)  
+                }
               } 
               else{
                 setModalShow(true)
@@ -163,14 +180,14 @@ const ConvertForm = () => {
             <Modal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
-                size="md"
+                size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 className="converter-modal"
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                    Conversion
+                    {conversionState ? "Done" : "Converting..."}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -187,14 +204,15 @@ const ConvertForm = () => {
                     <div className="text"><span>Total Games: </span> {totalGames}</div>
                     }
                     {game &&
-                    <div className="text"><span>Game: </span> {game} {gameStatus === "success" ? 
-                    <span className="iconify success" data-icon="ant-design:check-outlined"></span> 
+                    <div className="text"><span>Game: </span> {game} <span> {gameStatus === "success" ? 
+                    <span><span className="iconify success" data-icon="ant-design:check-outlined"></span></span>
                     :
                     gameStatus === "fail" ?
-                    <span className="iconify fail" data-icon="clarity:times-line"></span>
+                    <span><span className="iconify fail" data-icon="clarity:times-line"></span></span>
                     :
                     ""
                      }
+                     </span>
                      </div>
                     }
                     {totalGamesConverted &&
@@ -206,12 +224,24 @@ const ConvertForm = () => {
                     {unavailableGamesAndOptions.length > 0 &&
                     <div className="unavailable">
                         <div className="unavailable-header">Games/Options Not Found</div>
+                        <Table variant="dark" striped bordered hover size="sm">
+                            <thead>
+                                <tr>
+                                    <th>Match</th>
+                                    <th>Option</th>
+                                    <th>Selection</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                         {unavailableGamesAndOptions.map(data => (
-                            <div className="game text">
-                                {data} 
-                            </div>
+                            <tr>
+                                <td>{data.Team1} vs {data.Team2}</td>
+                                <td>{data.Option}</td>
+                                <td>{data.Selection}</td>
+                            </tr>
                         ))}
-                        
+                         </tbody>
+                         </Table>
                     </div>
                     }
                     <div className="initerror" dangerouslySetInnerHTML={{__html: initError}}>

@@ -20,6 +20,8 @@ const Header = () => {
     const [returnToken, setReturnToken] = React.useState(null)
     const [forgotPassword, setForgotPassword] = React.useState(false)
     const [userName, setUserName] = React.useState("")
+    const [userId, setUserId] = React.useState("")
+
 
     const {user} = useState(store)
     const {conversionUnit} = useState(store)
@@ -31,6 +33,7 @@ const Header = () => {
         if(token){
             const decoded = jwt_decode(token)
             setUserName(decoded[0].username)
+            setUserId(decoded[0].id)
             user.set(decoded[0])
             setReturnToken(token)
         }
@@ -42,10 +45,14 @@ const Header = () => {
     useEffect(() => {
         try{
             const fetch = async () => {
-                const res = await getUserPlan(user.get().id)
-                totalConversions.set(res.data.totalConversions)
-                conversionPlan.set(res.data.conversionPlan)
-                conversionUnit.set(res.data.conversionUnit)
+                try {
+                    const res = await getUserPlan(user.get().id)
+                    totalConversions.set(res.data.totalConversions)
+                    conversionPlan.set(res.data.conversionPlan)
+                    conversionUnit.set(res.data.conversionUnit)    
+                } catch (err) {
+                    console.log(err)
+                }
             }
             fetch()
         }
@@ -176,7 +183,7 @@ const Header = () => {
                             <span>
                             <div className="user-details">
                                 <div className="user mb-3">
-                                    <div className="username white user-link-size  ml-3"> {userName} </div>
+                                    <div className="username white user-link-size  ml-3"> {userName} | CC-{userId} </div>
                                 </div>
                                 <div className="user-links">
                                     <div className="account">

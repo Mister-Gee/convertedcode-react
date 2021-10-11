@@ -16,10 +16,14 @@ import Dashboard from '../Dashboard/Dashboard';
 import SubscriptionPlans from '../SubscriptionPlans/SubscriptionPlans';
 import Support from '../Support/Support';
 import Register from '../Register/Register';
+import Disclaimer from '../Disclaimer/Disclaimer';
 
 const Routes = () => {
     return (
         <Switch>
+            <Route path="/disclaimer">
+                <Disclaimer />
+            </Route>
             <Route path="/register">
                 <Register />
             </Route>
