@@ -60,10 +60,10 @@ const Routes = () => {
             <Route path="/available-options">
                 <AvailableOptions />
             </Route>
-            <Route path="/match-review/:id">
+            <Route path="/stat/:id">
                 <MatchReview />
             </Route>
-            <Route path="/match-reviews">
+            <Route path="/hot-stats">
                 <MatchReviews />
             </Route>
             <Route path="/punters-tips">

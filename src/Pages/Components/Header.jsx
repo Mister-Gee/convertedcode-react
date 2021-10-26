@@ -172,7 +172,7 @@ const Header = () => {
                 <div className="header-nav">
                     <NavLink exact to="/">Home</NavLink>
                     <NavLink to="/punters-tips">Punters Tips</NavLink>
-                    <NavLink to="/match-reviews">Match Reviews</NavLink>
+                    <NavLink to="/hot-stats">Hot Stats</NavLink>
                     <NavLink to="/bet-terminologies">Bet Terminologies</NavLink>
                 </div>
                 <div className="auth-section">

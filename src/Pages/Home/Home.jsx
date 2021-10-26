@@ -51,8 +51,8 @@ const Home = () => {
                 </div>
                 <div className="mobile-home-mr-wrapper">
                     <div className="header">
-                        <div className="title">Match Review</div>
-                        <div className="link"> <Link to="./match-reviews">View All</Link> </div>
+                        <div className="title">Hot Stats</div>
+                        <div className="link"> <Link to="./hot-stats">View All</Link> </div>
                     </div>
                     <MobileMatchReview />
                 </div>

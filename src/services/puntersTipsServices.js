@@ -10,3 +10,7 @@ export const getPuntersTips = (page) => {
 export const createPuntersTips = (data) => {
     return http.post("/punters-tips/create", data)
 }
+
+export const searchPunter = (name) => {
+    return http.get(`/punters-tips/search/${name}`)
+}

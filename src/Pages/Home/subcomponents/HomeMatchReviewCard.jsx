@@ -7,7 +7,7 @@ const HomeMatchReviewCard = ({imageLink, id, title, content, dateTime, author, s
                 <img src={`https://api.convertedcode.com/storage/${imageLink}`} alt={title}/>
             </div>
             <div className="title">
-                <Link to={`/match-review/${id}`}>
+                <Link to={`/stat/${id}`}>
                     {title} 
                 </Link>
             </div>

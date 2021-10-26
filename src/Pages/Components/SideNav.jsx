@@ -79,11 +79,11 @@ const SideNav = () => {
           />
           <span>Punters Tips</span>
         </NavLink>
-        <NavLink to="/match-reviews">
+        <NavLink to="/hot-stats">
           <StarCheckIcon 
             color="#8B8787"
           />
-          <span>Match Reviews</span>
+          <span>Hot Stats</span>
         </NavLink>
         <NavLink to="/bet-terminologies">
           <BallotIcon />

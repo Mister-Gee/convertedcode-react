@@ -15,3 +15,11 @@ export const forgotPassword = (data) => {
 export const logout = () => {
     return http.post("/logout")
 }
+
+export const changeUserRole = (data) => {
+    return http.post("/changeRole", data)
+}
+
+export const registerShop = (data) => {
+    return http.post("/register-shop", data)
+}

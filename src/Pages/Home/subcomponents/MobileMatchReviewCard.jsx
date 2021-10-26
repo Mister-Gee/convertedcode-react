@@ -7,7 +7,7 @@ const MobileMatchReviewCard = ({imageLink, id, title, content, dateTime, author,
                 <img src={`https://api.convertedcode.com/storage/${imageLink}`} alt={title}/>
             </div>
             <div className="title">
-                <Link  to={`./match-review/${id}`}>  
+                <Link  to={`./stat/${id}`}>  
                     {title} 
                 </Link>
             </div>

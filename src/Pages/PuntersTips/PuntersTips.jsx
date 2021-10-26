@@ -2,16 +2,83 @@ import Frame from "../Components/Frame";
 import {Helmet} from "react-helmet";
 import {Container, Row, Col, Table} from "react-bootstrap";
 import { Parallax } from 'react-scroll-parallax';
-import {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import ContentLoader from '../Components/ContentLoader';
-import {getPuntersTips} from '../../services/puntersTipsServices';
+import {getPuntersTips, searchPunter} from '../../services/puntersTipsServices';
+import {convertDbDateTimeToDate} from '../../utils/Functions';
+import { useState } from '@hookstate/core';
+import store from '../../store/store';
 
 const PuntersTips = () => {
-    const [isLoading, setIsLoading] = useState(true)
-    const [puntersTips, setPuntersTips] = useState([])
-    const [page, setPage] = useState(1)
-    const [currentPage, setCurrentPage] = useState(0)
-    const [totalPages, setTotalPages] = useState(0)
+    const [isLoading, setIsLoading] = React.useState(true)
+    const [puntersTips, setPuntersTips] = React.useState([])
+    const [page, setPage] = React.useState(1)
+    const [currentPage, setCurrentPage] = React.useState(0)
+    const [totalPages, setTotalPages] = React.useState(0)
+
+
+    const [searchInput, setSearchInput] = React.useState("")
+    const [isSearched, setIsSearched] = React.useState(false)
+
+    const [rerender, setSetRerender] = React.useState(false)
+
+    const {alertNotification} = useState(store)
+    const {alertMessage} = useState(store)
+    const {alertType} = useState(store)
+
+    const handleSearch = async(e) => {
+        if(e.key === 'Enter'){
+            if(searchInput !== ""){
+                setIsLoading(true)
+                const res = await searchPunter(searchInput)
+                if(res.status === 200){
+                    setPuntersTips(res.data.data)
+                    setTotalPages(1)
+                    setCurrentPage(0)
+                    setIsSearched(true)
+                    setIsLoading(false)
+                }
+                else{
+                    setIsLoading(false)
+                    alertType.set("danger")
+                    alertMessage.set("No Search Result Found")
+                    alertNotification.set(true)
+                    setTimeout(() => {
+                        alertNotification.set(false)
+                    }, 1500)  
+                }
+            }
+        }
+    }
+
+    const search = async() => {
+        if(searchInput !== ""){
+                setIsLoading(true)
+                const res = await searchPunter(searchInput)
+                if(res.status === 200){
+                    setPuntersTips(res.data.data)
+                    setTotalPages(1)
+                    setCurrentPage(0)
+                    setIsSearched(true)
+                    setIsLoading(false)
+                }
+                else{
+                    setIsLoading(false)
+                    alertType.set("danger")
+                    alertMessage.set("No Search Result Found")
+                    alertNotification.set(true)
+                    setTimeout(() => {
+                        alertNotification.set(false)
+                    }, 1500)  
+                }
+            }
+    }
+
+    const cancel = () => {
+        setSetRerender(!rerender)
+        setIsSearched(false)
+        setSearchInput("")
+    }
 
     function goToNextPage() {
         if(page < totalPages){
@@ -39,7 +106,7 @@ const PuntersTips = () => {
             }
         }
         fetch()
-    } ,[page])
+    } ,[page, rerender])
     
     return (
         <Frame>
@@ -76,10 +143,23 @@ const PuntersTips = () => {
                                 </div>
                                 <div className="search">
                                     <div className="input-group">
-                                        <div className="input-group-prepend">
+                                        {isSearched ?
+                                        <div className="input-group-prepend" onClick={cancel}>
+                                            <span className="iconify" data-icon="pepicons:times"></span>
+                                        </div>
+                                        :
+                                        <div className="input-group-prepend" onClick={search}>
                                             <span className="iconify" data-icon="bx:bx-search" data-inline="false"></span>
                                         </div>
-                                        <input type="text" className="form-control search-input" placeholder="Search Punter or bookie" />
+                                        }
+                                        <input 
+                                            type="text" 
+                                            className="form-control search-input" 
+                                            placeholder="Search Punter or bookie" 
+                                            value={searchInput}
+                                            onChange={(e) => setSearchInput(e.target.value)}
+                                            onKeyDown={(e) => handleSearch(e)}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -91,6 +171,7 @@ const PuntersTips = () => {
                                         <th>Bet Code</th>
                                         <th>Bookie</th>
                                         <th>Odds</th>
+                                        <th>Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -100,6 +181,7 @@ const PuntersTips = () => {
                                             <td> <a href={data.betcode}>View Code</a> </td>
                                             <td> {data.bookie} </td>
                                             <td> {data.odds} </td>
+                                            <td> {convertDbDateTimeToDate(data.date_time)} </td>
                                         </tr>
                                         ))}
                                     </tbody>
@@ -142,10 +224,23 @@ const PuntersTips = () => {
                     </div>
                     <div className="search">
                         <div className="input-group">
-                            <div className="input-group-prepend">
-                                <span className="iconify" data-icon="bx:bx-search" data-inline="false"></span>
-                            </div>
-                            <input type="text" className="form-control search-input" placeholder="Search Punter or bookie" />
+                            {isSearched ?
+                                <div className="input-group-prepend" onClick={cancel}>
+                                    <span className="iconify" data-icon="pepicons:times"></span>
+                                </div>
+                                :
+                                <div className="input-group-prepend" onClick={search}>
+                                    <span className="iconify" data-icon="bx:bx-search" data-inline="false"></span>
+                                </div>
+                            }
+                            <input 
+                                type="text" 
+                                className="form-control search-input" 
+                                placeholder="Search Punter or bookie" 
+                                value={searchInput}
+                                onChange={(e) => setSearchInput(e.target.value)}
+                                onKeyDown={(e) => handleSearch(e)}
+                            />
                         </div>
                     </div>
                 </div>
@@ -157,6 +252,7 @@ const PuntersTips = () => {
                                 <th>Bet Code</th>
                                 <th>Bookie</th>
                                 <th>Odds</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -166,6 +262,7 @@ const PuntersTips = () => {
                                 <td> <a href={data.betcode}>View Code</a> </td>
                                 <td> {data.bookie} </td>
                                 <td> {data.odds} </td>
+                                <td> {convertDbDateTimeToDate(data.date_time)} </td>
                             </tr>
                             ))}
                         </tbody>

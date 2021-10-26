@@ -98,6 +98,15 @@ body {
 
 /********Converter Modal***********/
 
+.stat-container {
+    background: #000000;
+    padding-top: 5px;
+}
+
+.stat-content {
+    color: #FFFFFF
+}
+
 .converter-modal .modal-content {
     height: 400px;
     background: #363A43;
@@ -618,8 +627,8 @@ body {
 
 .goBack {
     color: #2F970C;
-    margin-top: 20px;
     cursor: pointer;
+    margin-top: 20px;
 }
 
 
@@ -1256,6 +1265,10 @@ body {
     background: #EAE9E9;
     border-radius: 5px;
     margin-top: -7px;
+}
+
+.punters-tips-table-section .date-search .search .input-group .input-group-prepend {
+    cursor: pointer;
 }
 
 .punters-tips-table-section .date-search .search .input-group .input-group-prepend .iconify {
@@ -2617,12 +2630,25 @@ body {
     .mob-converter .unavailable .game {
         margin-bottom: -2px;
     }
-    .goback {
-        margin-top: 20px;
+    .gobackConv {
         font-size: 12px;
         color: #2F970C;
         font-weight: bold;
         cursor: pointer;
+        position: relative;
+        bottom: -100px;
+    }
+    .stat-container {
+        margin-top: 20px;
+        cursor: pointer;
+        position: relative;
+        bottom: -100px;
+        background: #000000;
+        padding: 4px 0px;
+    }
+    .stat-content {
+        color: #FFFFFF;
+        font-size: 12px
     }
     /*****Disclaimer****/
     .disclamer-section {

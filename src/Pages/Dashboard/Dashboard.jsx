@@ -3,16 +3,19 @@ import {useHistory} from 'react-router-dom';
 import Frame from "../Components/Frame";
 import {Container, Row, Col, Tabs, Tab} from "react-bootstrap";
 import DashboardCard from "./subcomponents/DashboardCard";
-import React,  {useEffect} from 'react';
+import React, {useEffect} from 'react';
 import MatchReviewForm from "./subcomponents/MatchReviewForm";
 import PuntersTipsForm from "./subcomponents/PuntersTipsForm";
 import BetTermForm from "./subcomponents/BetTermForm";
 import AvailableLeagueForm from "./subcomponents/AvailableLeagueForm";
 import AvailableOptionForm from "./subcomponents/AvailableOptionForm";
 import CreditUnitForm from "./subcomponents/CreditUnitForm";
+import AssignRoleForm from "./subcomponents/AssignRoleForm";
+import StatForm from "./subcomponents/StatForm";
+import RegShopForm from "./subcomponents/RegShopForm";
 import SubscriptionPlanTable from "../Components/SubscriptionPlanTable";
-import {getFromLocalStorage} from '../../utils/Functions';
-import {getUserPlan} from '../../services/dashboardService';
+import {getFromLocalStorage, role} from '../../utils/Functions';
+import {getUserPlan, getDailyConversionData, getWeekOfDayConversionData} from '../../services/dashboardService';
 import { useState } from '@hookstate/core';
 import store from '../../store/store';
 import ContentLoader from "../Components/ContentLoader";
@@ -25,6 +28,35 @@ const Dashboard = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [dashboardReload, setDashboardReload] = React.useState(false)
 
+    //Bet9ja ChartState
+    const [lineXaxisBet9ja, setLineXaxisBet9ja] = React.useState([])
+    const [lineDataBet9ja, setLineDataBet9ja] = React.useState([])
+    const [barXaxisBet9ja, setBarXaxisBet9ja] = React.useState([])
+    const [barDataBet9ja, setBarDataBet9ja] = React.useState([])
+
+    //Betking ChartState
+    const [lineXaxisBetking, setLineXaxisBetking] = React.useState([])
+    const [lineDataBetking, setLineDataBetking] = React.useState([])
+    const [barXaxisBetking, setBarXaxisBetking] = React.useState([])
+    const [barDataBetking, setBarDataBetking] = React.useState([])
+
+    //Sportybet ChartState
+    const [lineXaxisSportybet, setLineXaxisSportybet] = React.useState([])
+    const [lineDataSportybet, setLineDataSportybet] = React.useState([])
+    const [barXaxisSportybet, setBarXaxisSportybet] = React.useState([])
+    const [barDataSportybet, setBarDataSportybet] = React.useState([])
+
+    //22Bet ChartState
+    const [lineXaxis22Bet, setLineXaxis22Bet] = React.useState([])
+    const [lineData22Bet, setLineData22Bet] = React.useState([])
+    const [barXaxis22Bet, setBarXaxis22Bet] = React.useState([])
+    const [barData22Bet, setBarData22Bet] = React.useState([])
+
+    //1xBet ChartState
+    const [lineXaxis1xBet, setLineXaxis1xBet] = React.useState([])
+    const [lineData1xBet, setLineData1xBet] = React.useState([])
+    const [barXaxis1xBet, setBarXaxis1xBet] = React.useState([])
+    const [barData1xBet, setBarData1xBet] = React.useState([])
 
     useEffect(() => {
         const token = getFromLocalStorage("returnToken")
@@ -33,6 +65,100 @@ const Dashboard = () => {
                 pathname: "/"
             })
         } 
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getDailyConversionData(role("Bet9ja"))
+            setLineXaxisBet9ja(res.data.days)
+            setLineDataBet9ja(res.data.totalConversions)
+        }
+        fetch()
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getWeekOfDayConversionData(role("Bet9ja"))
+            setBarXaxisBet9ja(res.data.day)
+            setBarDataBet9ja(res.data.totalConversions)
+        }
+        fetch()
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getDailyConversionData(role("Betking"))
+            setLineXaxisBetking(res.data.days)
+            setLineDataBetking(res.data.totalConversions)
+            
+        }
+        fetch()
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getWeekOfDayConversionData(role("Betking"))
+            setBarXaxisBetking(res.data.day)
+            setBarDataBetking(res.data.totalConversions)
+        }
+        fetch()
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getDailyConversionData(role("Sportybet"))
+            setLineXaxisSportybet(res.data.days)
+            setLineDataSportybet(res.data.totalConversions)
+            
+        }
+        fetch()
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getWeekOfDayConversionData(role("Sportybet"))
+            setBarXaxisSportybet(res.data.day)
+            setBarDataSportybet(res.data.totalConversions)
+        }
+        fetch()
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getDailyConversionData(role("Bet22"))
+            setLineXaxis22Bet(res.data.days)
+            setLineData22Bet(res.data.totalConversions)
+            
+        }
+        fetch()
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getWeekOfDayConversionData(role("Bet22"))
+            setBarXaxis22Bet(res.data.day)
+            setBarData22Bet(res.data.totalConversions)
+        }
+        fetch()
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getDailyConversionData(role("Bet1x"))
+            setLineXaxis1xBet(res.data.days)
+            setLineData1xBet(res.data.totalConversions)
+            
+        }
+        fetch()
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getWeekOfDayConversionData(role("Bet1x"))
+            setBarXaxis1xBet(res.data.day)
+            setBarData1xBet(res.data.totalConversions)
+        }
+        fetch()
     }, [])
 
     const {user} = useState(store)
@@ -56,17 +182,69 @@ const Dashboard = () => {
         }
     }, [dashboardReload])
 
-    const barChartData = {
-    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-    datasets: [
-        {
-        label: 'No of Conversions',
-        data: [12, 19, 3, 5, 2, 3, 10],
-        backgroundColor: 'rgba(47, 151, 12, 0.7)',
-        borderColor: 'rgb(47, 151, 12)',
-        borderWidth: 1,
-        },
-    ],
+    const bet9jaBarChartData = {
+        labels: barXaxisBet9ja,
+        datasets: [
+            {
+            label: 'Bet9ja Day of the Week Conversions (From 11/10/2021)',
+            data: barDataBet9ja,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            borderWidth: 1,
+            },
+        ],
+    };
+
+    const betkingBarChartData = {
+        labels: barXaxisBetking,
+        datasets: [
+            {
+            label: 'Betking Day of the Week Conversions (From 11/10/2021)',
+            data: barDataBetking,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            borderWidth: 1,
+            },
+        ],
+    };
+
+    const sportybetBarChartData = {
+        labels: barXaxisSportybet,
+        datasets: [
+            {
+            label: 'Sportybet Day of the Week Conversions (From 11/10/2021)',
+            data: barDataSportybet,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            borderWidth: 1,
+            },
+        ],
+    };
+    
+    const bet22BarChartData = {
+        labels: barXaxis22Bet,
+        datasets: [
+            {
+            label: '22Bet Day of the Week Conversions (From 11/10/2021)',
+            data: barData22Bet,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            borderWidth: 1,
+            },
+        ],
+    };
+
+    const bet1xBarChartData = {
+        labels: barXaxis1xBet,
+        datasets: [
+            {
+            label: '1xBet Day of the Week Conversions (From 11/10/2021)',
+            data: barData1xBet,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            borderWidth: 1,
+            },
+        ],
     };
 
     const barChartOptions = {
@@ -81,30 +259,82 @@ const Dashboard = () => {
     },
     };
 
-    const lineChartData = {
-    labels: ['1/10/2021', '2/10/2021', '3/10/2021', '4/10/2021', '5/10/2021', '6/10/2021'],
-    datasets: [
-        {
-        label: 'Daily Conversions',
-        data: [12, 19, 3, 5, 2, 3],
-        fill: false,
-        backgroundColor: 'rgba(47, 151, 12, 0.7)',
-        borderColor: 'rgb(47, 151, 12)',
-        },
-    ],
+    const bet9jaLineChartData = {
+        labels: lineXaxisBet9ja,
+        datasets: [
+            {
+            label: 'Bet9ja Daily Conversions',
+            data: lineDataBet9ja,
+            fill: false,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            },
+        ],
+    };
+
+    const betkingLineChartData = {
+        labels: lineXaxisBetking,
+        datasets: [
+            {
+            label: 'Betking Daily Conversions',
+            data: lineDataBetking,
+            fill: false,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            },
+        ],
+    };
+
+    const sportybetLineChartData = {
+        labels: lineXaxisSportybet,
+        datasets: [
+            {
+            label: 'Sportybet Daily Conversions',
+            data: lineDataSportybet,
+            fill: false,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            },
+        ],
+    };
+
+    const bet22LineChartData = {
+        labels: lineXaxis22Bet,
+        datasets: [
+            {
+            label: '22Bet Daily Conversions',
+            data: lineData22Bet,
+            fill: false,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            },
+        ],
+    };
+
+    const bet1xLineChartData = {
+        labels: lineXaxis1xBet,
+        datasets: [
+            {
+            label: '1xBet Daily Conversions',
+            data: lineData1xBet,
+            fill: false,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            },
+        ],
     };
 
     const lineChartOptions = {
-    scales: {
-        yAxes: [
-        {
-            ticks: {
-            beginAtZero: true,
+        scales: {
+            yAxes: [
+            {
+                ticks: {
+                beginAtZero: true,
+                },
             },
+            ],
         },
-        ],
-    },
-};
+    };
     
     return (
         <Frame>
@@ -166,9 +396,22 @@ const Dashboard = () => {
                                 <Tab eventKey="available-option" title="Available Option">
                                     <AvailableOptionForm />
                                 </Tab>
+                                <Tab eventKey="stat" title="Stat">
+                                    <StatForm />
+                                </Tab>
                                 {user.get().isAdmin === "true" &&
                                     <Tab eventKey="credit-unit" title="Credit Unit(Manual)">
                                         <CreditUnitForm />
+                                    </Tab>
+                                }
+                                {user.get().isAdmin === "true" &&
+                                    <Tab eventKey="assign-role" title="Assign Role to User">
+                                        <AssignRoleForm />
+                                    </Tab>
+                                }
+                                {user.get().isAdmin === "true" &&
+                                    <Tab eventKey="reg-shop" title="Register Shop">
+                                        <RegShopForm />
                                     </Tab>
                                 }
                             </Tabs>
@@ -178,20 +421,89 @@ const Dashboard = () => {
                 :
                 ""
                 }
-                {user.get().isAdmin === "true" &&
+               
                 <Row className="pt-5 ml-n5 mr-n4 pl-5 pr-5">
-                    <Col lg={6}>
+                    {user.get().isAdmin === "true" || user.get().isAdmin === "Bet9ja" ? 
+                    <>
+                    <Col lg={6} className="mb-5">
                         <div className="admin-post">
-                            <Line data={lineChartData} options={lineChartOptions} />
+                            <Line data={bet9jaLineChartData} options={lineChartOptions} />
                         </div>
                     </Col>
-                    <Col lg={6}>
+                    <Col lg={6} className="mb-5">
                         <div className="admin-post">
-                            <Bar data={barChartData} options={barChartOptions} />
+                            <Bar data={bet9jaBarChartData} options={barChartOptions} />
                         </div>
                     </Col>
+                    </>
+                    :
+                    ""
+                    }
+                    {user.get().isAdmin === "true" || user.get().isAdmin === "Betking" ? 
+                    <>
+                    <Col lg={6} className="mb-5">
+                        <div className="admin-post">
+                            <Line data={betkingLineChartData} options={lineChartOptions} />
+                        </div>
+                    </Col>
+                    <Col lg={6} className="mb-5">
+                        <div className="admin-post">
+                            <Bar data={betkingBarChartData} options={barChartOptions} />
+                        </div>
+                    </Col>
+                    </>
+                    :
+                    ""
+                    }
+                    {user.get().isAdmin === "true" || user.get().isAdmin === "Sportybet" ? 
+                    <>
+                    <Col lg={6} className="mb-5">
+                        <div className="admin-post">
+                            <Line data={sportybetLineChartData} options={lineChartOptions} />
+                        </div>
+                    </Col>
+                    <Col lg={6} className="mb-5">
+                        <div className="admin-post">
+                            <Bar data={sportybetBarChartData} options={barChartOptions} />
+                        </div>
+                    </Col>
+                    </>
+                    :
+                    ""
+                    }
+                    {user.get().isAdmin === "true" || user.get().isAdmin === "Bet22" ? 
+                    <>
+                    <Col lg={6} className="mb-5">
+                        <div className="admin-post">
+                            <Line data={bet22LineChartData} options={lineChartOptions} />
+                        </div>
+                    </Col>
+                    <Col lg={6} className="mb-5">
+                        <div className="admin-post">
+                            <Bar data={bet22BarChartData} options={barChartOptions} />
+                        </div>
+                    </Col>
+                    </>
+                    :
+                    ""
+                    }
+                    {user.get().isAdmin === "true" || user.get().isAdmin === "Bet1x" ? 
+                    <>
+                    <Col lg={6} className="mb-5">
+                        <div className="admin-post">
+                            <Line data={bet1xLineChartData} options={lineChartOptions} />
+                        </div>
+                    </Col>
+                    <Col lg={6} className="mb-5">
+                        <div className="admin-post">
+                            <Bar data={bet1xBarChartData} options={barChartOptions} />
+                        </div>
+                    </Col>
+                    </>
+                    :
+                    ""
+                    }
                 </Row>
-                }
                 <Row className="pt-5 ml-n5 mr-n4 pl-5 pr-5">
                     <Col lg={12}>
                         <SubscriptionPlanTable 
@@ -243,9 +555,22 @@ const Dashboard = () => {
                         <Tab eventKey="available-option" title="Available Option">
                             <AvailableOptionForm />
                         </Tab>
+                        <Tab eventKey="stat" title="Stat">
+                            <StatForm />
+                        </Tab>
                         {user.get().isAdmin === "true" &&
                             <Tab eventKey="credit-unit" title="Credit Unit(Manual)">
                                 <CreditUnitForm />
+                            </Tab>
+                        }
+                        {user.get().isAdmin === "true" &&
+                            <Tab eventKey="assign-role" title="Assign Role to User">
+                                <AssignRoleForm />
+                            </Tab>
+                        }
+                        {user.get().isAdmin === "true" &&
+                            <Tab eventKey="reg-shop" title="Register Shop">
+                                <RegShopForm />
                             </Tab>
                         }
                     </Tabs>
@@ -254,15 +579,65 @@ const Dashboard = () => {
                 ""
                 }
 
-                {user.get().isAdmin === "true" &&
+                {user.get().isAdmin === "true" || user.get().isAdmin === "Bet9ja" ?
                 <>
                 <div className="admin-post mt-3 mb-2">
-                    <Line data={lineChartData} options={lineChartOptions} />
+                    <Line data={bet9jaLineChartData} options={lineChartOptions} />
                 </div>
                 <div className="admin-post mt-3 mb-2">
-                    <Bar data={barChartData} options={barChartOptions} />
+                    <Bar data={bet9jaBarChartData} options={barChartOptions} />
                 </div>
                 </>
+                :
+                ""
+                }
+                {user.get().isAdmin === "true" || user.get().isAdmin === "Betking" ?
+                <>
+                <div className="admin-post mt-3 mb-2">
+                    <Line data={betkingLineChartData} options={lineChartOptions} />
+                </div>
+                <div className="admin-post mt-3 mb-2">
+                    <Bar data={betkingBarChartData} options={barChartOptions} />
+                </div>
+                </>
+                :
+                ""
+                }
+                {user.get().isAdmin === "true" || user.get().isAdmin === "Sportybet" ?
+                <>
+                <div className="admin-post mt-3 mb-2">
+                    <Line data={sportybetLineChartData} options={lineChartOptions} />
+                </div>
+                <div className="admin-post mt-3 mb-2">
+                    <Bar data={sportybetBarChartData} options={barChartOptions} />
+                </div>
+                </>
+                :
+                ""
+                }
+                {user.get().isAdmin === "true" || user.get().isAdmin === "22Bet" ?
+                <>
+                <div className="admin-post mt-3 mb-2">
+                    <Line data={bet22LineChartData} options={lineChartOptions} />
+                </div>
+                <div className="admin-post mt-3 mb-2">
+                    <Bar data={bet22BarChartData} options={barChartOptions} />
+                </div>
+                </>
+                :
+                ""
+                }
+                {user.get().isAdmin === "true" || user.get().isAdmin === "1xBet" ?
+                <>
+                <div className="admin-post mt-3 mb-2">
+                    <Line data={bet1xLineChartData} options={lineChartOptions} />
+                </div>
+                <div className="admin-post mt-3 mb-2">
+                    <Bar data={bet1xBarChartData} options={barChartOptions} />
+                </div>
+                </>
+                :
+                ""
                 }
                 <div className="sub-plans mt-3">
                     <SubscriptionPlanTable 

@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Formik } from 'formik';
 import {Table} from 'react-bootstrap';
 import * as Yup from 'yup';
@@ -8,12 +8,19 @@ import {convert} from '../../services/conversionService'
 import store from '../../store/store';
 import { io } from 'socket.io-client';
 import Loader from "react-js-loader";
+import {dayToString} from '../../utils/Functions';
+import {saveConversion} from '../../services/reportServices';
+import {getLatestStat} from '../../services/statService';
+import Marquee from "react-fast-marquee";
+
 
 const MobileConvertForm = ({close}) => {
     const { REACT_APP_CONVERTEDCODE_SOCKET_URL } = process.env;
 
     const [tc, setTc] = React.useState(false)
     const [tcError, setTcError] = React.useState("")
+
+    const [stat, setStat] = React.useState("")
 
     const [convertDrawer, setConvertDrawer] = React.useState(false)
     const [conversionState, setConversionState] = React.useState(false)
@@ -37,7 +44,18 @@ const MobileConvertForm = ({close}) => {
     const {conversionUnit} = useState(store)
     const {conversionPlan} = useState(store)
 
-
+    useEffect(() => {
+        const fetch = async() => {
+            try{
+                const res = await getLatestStat()
+                setStat(res.data.content)
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+        fetch()
+    } ,[])
 
     const initialValues = {
         code: "",
@@ -47,24 +65,36 @@ const MobileConvertForm = ({close}) => {
     
     const todaysDateObject = new Date()
     const today = todaysDateObject.getDay()
+    const dd = String(todaysDateObject.getDate()).padStart(2, '0')
+    const mm = String(todaysDateObject.getMonth() + 1).padStart(2, '0')
+    const yyyy = todaysDateObject.getFullYear()
 
     const onSubmit =  async (data) => {
+         setConversionState(false)
+        setConversionError("")
+        setGame("")
+        setTotalGames("")
+        setTotalGamesConverted("")
+        setBetCode("")
+        setGameStatus("")
+        setUnavailableGamesAndOptions([])
+        setInitError("")
+        setIsConverting(true)
+        setConvertDrawer(true)
         if(user.get().username){
             if(tc){
               if(conversionUnit.get() > 0){
                     if(data.from !== data.to){
                             if(((conversionPlan.get() === "Weekends" || conversionPlan.get() === "Weekend") && (today === 5 || today === 6 || today === 0)) ||  conversionPlan.get() === "Daily" || conversionPlan.get() === "Monthly" || conversionPlan.get() === "1 Month" || conversionPlan.get() === "Premium" || conversionPlan.get() === "Ghost Plan" || conversionPlan.get() === "Ghost Plan II" || conversionPlan.get() === "Admin Plan"){
-                              setConversionState(false)
-                              setConversionError("")
-                              setGame("")
-                              setTotalGames("")
-                              setTotalGamesConverted("")
-                              setBetCode("")
-                              setGameStatus("")
-                              setUnavailableGamesAndOptions([])
-                              setInitError("")
-                              setIsConverting(true)
-                              setConvertDrawer(true)
+
+                              const conversionDetails = {
+                                bookie_from: data.from,
+                                bookie_to: data.to,
+                                bet_code: data.code,
+                                day: dayToString(today),
+                                date: `${dd}/${mm}/${yyyy}`
+                              }
+
                               const socket = io(REACT_APP_CONVERTEDCODE_SOCKET_URL, { reconnection: false }, { reconnectionDelay: 100000 }, { transports: ['websocket', 'polling'] }, { forceNew: false }, { reconnectionDelayMax: 100000, })
                               socket.on('connect', function() {
                                   socket.emit('my event', data);
@@ -75,7 +105,7 @@ const MobileConvertForm = ({close}) => {
                                       alertNotification.set(false)  
                                   }, 3000)
                               })
-                              
+                              await saveConversion(conversionDetails)
                               socket.on('error', function(data) {
                                   setConversionError(data['error'])
                                   alertType.set("danger")
@@ -90,6 +120,7 @@ const MobileConvertForm = ({close}) => {
                               socket.on('game', async (data) => {
                                   setTotalGames(data['game'])
                                   await convert(user.get().id)
+                                  conversionUnit.set(conversionUnit.get() - 1)
                                   setIsConverting(false)
                               })
                               socket.on('my response', function(data) {
@@ -346,7 +377,13 @@ const MobileConvertForm = ({close}) => {
                     
                     </>
                     }
-                    <span className="goback" onClick={() => setConvertDrawer(false)}><span className="iconify" data-icon="ic:outline-arrow-back-ios-new"></span> Go back/Cancel</span>
+                    <Marquee
+                        className="stat-container"
+                        gradient={false}
+                    >
+                        <p className="stat-content">{stat}</p>
+                    </Marquee>
+                    <span className="gobackConv mt-5" onClick={() => setConvertDrawer(false)}><span className="iconify" data-icon="ic:outline-arrow-back-ios-new"></span> Go back/Cancel</span>
                 </div>
             </div>
         </div>

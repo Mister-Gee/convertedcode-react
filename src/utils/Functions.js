@@ -40,26 +40,11 @@ export const tableIndex = (index, realIndex) => {
     return result
 }
 
-// export const getUserRole = () => {
-//     const token = localStorage.getItem("token")
-//     const decodedToken = jwt_decode(token)
-//     const userRole = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
-//     return userRole
-// }
 
 export const search = (array, value, key) => {
     return array.filter(a => a[key].toLowerCase().includes(value.toLowerCase()))
 }
 
-// export const getInstitutionId = () => {
-//     const institutionId = localStorage.getItem("institutionId")
-//     return institutionId
-// }
-
-// export const getWebUserId = () => {
-//     const webUserId = localStorage.getItem("webUserId")
-//     return webUserId
-// }
 
 export const dateToInputDate = (format) => {
     let result = new Date(format)
@@ -97,4 +82,21 @@ export const dayToString = (val) => {
     } else if (val === 6) {
         return "Saturday"
     }
+}
+
+export const role = (isAdminData) => {
+    if(isAdminData === "Bet22"){
+        return "22Bet"
+    }
+    else if(isAdminData === "Bet1x"){
+        return "1xBet"
+    }
+    else{
+        return isAdminData
+    }
+}
+
+export const convertDbDateTimeToDate = (rawDate) => {
+    const result = rawDate.split(" ")
+    return result[0]
 }

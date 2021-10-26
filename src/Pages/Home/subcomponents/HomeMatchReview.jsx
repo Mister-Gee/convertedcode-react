@@ -27,8 +27,8 @@ const HomeMatchReview = () => {
         <div className="match-review-home offer-section">
             <h3 className="title"><span>Latest</span></h3>
             <div className="header-link mb-3">
-                <div className="header">Match Reviews</div>
-                <div className="link"> <Link to="./match-reviews">View All</Link> </div>
+                <div className="header">Hot Stats</div>
+                <div className="link"> <Link to="./hot-stats">View All</Link> </div>
             </div>
             <div className="match-review-section">
             {isLoading 
