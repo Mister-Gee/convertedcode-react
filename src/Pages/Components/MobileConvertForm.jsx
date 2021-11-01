@@ -85,7 +85,7 @@ const MobileConvertForm = ({close}) => {
             if(tc){
               if(conversionUnit.get() > 0){
                     if(data.from !== data.to){
-                            if(((conversionPlan.get() === "Weekends" || conversionPlan.get() === "Weekend") && (today === 5 || today === 6 || today === 0)) ||  conversionPlan.get() === "Daily" || conversionPlan.get() === "Monthly" || conversionPlan.get() === "1 Month" || conversionPlan.get() === "Premium" || conversionPlan.get() === "Ghost Plan" || conversionPlan.get() === "Ghost Plan II" || conversionPlan.get() === "Admin Plan"){
+                            if(((conversionPlan.get() === "Weekends" || conversionPlan.get() === "Weekend") && (today === 5 || today === 6 || today === 0)) || conversionPlan.get() === "Daily Bonus" ||  conversionPlan.get() === "Daily" || conversionPlan.get() === "Monthly" || conversionPlan.get() === "1 Month" || conversionPlan.get() === "Premium" || conversionPlan.get() === "Ghost Plan" || conversionPlan.get() === "Ghost Plan II" || conversionPlan.get() === "Admin Plan"){
 
                               const conversionDetails = {
                                 bookie_from: data.from,
@@ -263,6 +263,9 @@ const MobileConvertForm = ({close}) => {
                                 <option value="Betking">Betking</option>
                                 <option value="Sportybet">SportyBet</option>
                                 <option value="22Bet">22Bet</option>
+                                <option value="1xBet" disabled>1xBet (Coming Soon)</option>
+                                <option value="Betwinner" disabled>Betwinner (Coming Soon)</option>
+                                <option value="Melbet" disabled>Melbet (Coming Soon)</option>
                             </select>
                             <small id="passwordHelpBlock" className="form-text text-danger">
                                 {errors.from && touched.from && errors.from}
@@ -282,6 +285,9 @@ const MobileConvertForm = ({close}) => {
                                 <option value="Betking">Betking</option>
                                 <option value="Sportybet">SportyBet</option>
                                 <option value="22Bet">22Bet</option>
+                                <option value="1xBet" disabled>1xBet (Coming Soon)</option>
+                                <option value="Betwinner" disabled>Betwinner (Coming Soon)</option>
+                                <option value="Melbet" disabled>Melbet (Coming Soon)</option>
                             </select>
                             <small id="passwordHelpBlock" className="form-text text-danger">
                                 {errors.to && touched.to && errors.to}

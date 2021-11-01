@@ -87,7 +87,7 @@ const ConvertForm = () => {
             if(tc){
               if(conversionUnit.get() > 0){
                   if(data.from !== data.to){
-                          if(((conversionPlan.get() === "Weekends" || conversionPlan.get() === "Weekend") && (today === 5 || today === 6 || today === 0 )) ||  conversionPlan.get() === "Daily" || conversionPlan.get() === "Monthly" || conversionPlan.get() === "1 Month" || conversionPlan.get() === "Premium" || conversionPlan.get() === "Ghost Plan" || conversionPlan.get() === "Ghost Plan II" || conversionPlan.get() === "Admin Plan"){
+                          if(((conversionPlan.get() === "Weekends" || conversionPlan.get() === "Weekend") && (today === 5 || today === 6 || today === 0 )) ||  conversionPlan.get() === "Daily" || conversionPlan.get() === "Daily Bonus" || conversionPlan.get() === "Monthly" || conversionPlan.get() === "1 Month" || conversionPlan.get() === "Premium" || conversionPlan.get() === "Ghost Plan" || conversionPlan.get() === "Ghost Plan II" || conversionPlan.get() === "Admin Plan"){
 
                             const conversionDetails = {
                                 bookie_from: data.from,
@@ -97,11 +97,11 @@ const ConvertForm = () => {
                                 date: `${dd}/${mm}/${yyyy}`
                             }
 
-                            const socket = io(REACT_APP_CONVERTEDCODE_SOCKET_URL, { reconnection: false }, { reconnectionDelay: 100000 }, { transports: ['websocket', 'polling'] }, { forceNew: false }, { reconnectionDelayMax: 100000, })
+                            const socket = io(REACT_APP_CONVERTEDCODE_SOCKET_URL, { reconnection: false }, { reconnectionDelay: 100000 }, { transports: ['websocket', 'polling'], rejectUnauthorized: false }, { forceNew: false }, { reconnectionDelayMax: 100000 })
                             socket.on('connect', function() {
                                 socket.emit('my event', data);
                                 alertType.set("success")
-                                alertMessage.set("Conversion Started...")
+                                alertMessage.set("Conversion Started...") 
                                 alertNotification.set(true)
                                 setTimeout(() => {
                                     alertNotification.set(false)  
@@ -342,6 +342,9 @@ const ConvertForm = () => {
                                         <option value="Betking">Betking</option>
                                         <option value="Sportybet">SportyBet</option>
                                         <option value="22Bet">22Bet</option>
+                                        <option value="1xBet" disabled>1xBet (Coming Soon)</option>
+                                        <option value="Betwinner" disabled>Betwinner (Coming Soon)</option>
+                                        <option value="Melbet" disabled>Melbet (Coming Soon)</option>
                                     </select>
                                     <small id="passwordHelpBlock" className="form-text text-danger">
                                         {errors.from && touched.from && errors.from}
@@ -360,6 +363,9 @@ const ConvertForm = () => {
                                         <option value="Betking">Betking</option>
                                         <option value="Sportybet">SportyBet</option>
                                         <option value="22Bet">22Bet</option>
+                                        <option value="1xBet" disabled>1xBet (Coming Soon)</option>
+                                        <option value="Betwinner" disabled>Betwinner (Coming Soon)</option>
+                                        <option value="Melbet" disabled>Melbet (Coming Soon)</option>
                                     </select>
                                     <small id="passwordHelpBlock" className="form-text text-danger">
                                         {errors.to && touched.to && errors.to}

@@ -1,6 +1,9 @@
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Spinner } from 'react-bootstrap';
+import {forgotPassword} from "../../services/authServices";
+import { useState } from '@hookstate/core';
+import store from '../../store/store';
 
 
 const ForgotPassword = () => {
@@ -8,8 +11,25 @@ const ForgotPassword = () => {
         email: ""
     }
 
+    const {alertNotification} = useState(store)
+    const {alertMessage} = useState(store)
+    const {alertType} = useState(store)
+
     const onSubmit = async (value) => {
-        console.log(value)
+        try{
+            const res = await forgotPassword(value)
+            if(res.status === 200){
+                alertType.set("success")
+                alertMessage.set("Reset Link Sent to your Email")
+                alertNotification.set(true)
+                setTimeout( () => {
+                    alertNotification.set(false)  
+                }, 3000)
+            }
+        }
+        catch(err){
+            console.log(err)
+        }
     }
 
     const validationSchema = Yup.object({
