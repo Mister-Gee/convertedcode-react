@@ -342,8 +342,8 @@ const ConvertForm = () => {
                                         <option value="Betking">Betking</option>
                                         <option value="Sportybet">SportyBet</option>
                                         <option value="22Bet">22Bet</option>
-                                        <option value="1xBet" disabled>1xBet (Coming Soon)</option>
-                                        <option value="Betwinner" disabled>Betwinner (Coming Soon)</option>
+                                        <option value="1xBet">1xBet</option>
+                                        <option value="Betwinner" >Betwinner</option>
                                         <option value="Melbet" disabled>Melbet (Coming Soon)</option>
                                     </select>
                                     <small id="passwordHelpBlock" className="form-text text-danger">
