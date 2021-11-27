@@ -89,6 +89,10 @@ const SideNav = () => {
           <BallotIcon />
           <span>Bet Terminologies</span>
         </NavLink>
+        <NavLink to="/support">
+          <span className="iconify nav-icon" data-icon="healthicons:contact-support-outline"></span>
+          <span>Support</span>
+        </NavLink>
         {user.get().username ?
         <NavLink to="/dashboard" className="account">
           <UserIcon />
@@ -108,13 +112,17 @@ const SideNav = () => {
           <WarningIcon />
           <span>Disclaimer</span>
         </NavLink>
-        {user.get().username ?
+        {user.get().isAdmin === "true" &&
+        <NavLink to="/messages">
+          <span className="iconify nav-icon" data-icon="bpmn:end-event-message"></span>
+          <span>Support Messages</span>
+        </NavLink>
+        }
+        {user.get().username &&
         <NavLink to="#" onClick={handleLogout} className="logout">
           <LogoutIcon />
           <span>Logout</span>
         </NavLink>
-        :
-        ""
         }
       </nav>
     </div>

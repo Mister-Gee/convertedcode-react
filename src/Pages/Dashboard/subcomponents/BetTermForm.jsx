@@ -25,7 +25,6 @@ const BetTermForm = () => {
             data.append("author", user.get().username)
 
             let res = await createBetTerm(data)
-            console.log(res)
             const status = res.status
             if(status === 201 && res.data != null){
                 alertType.set("success")

@@ -200,6 +200,12 @@ const Header = () => {
                                                 <NavDropdown.Item as={Link} to="./subscription-plans">Subcription Plans</NavDropdown.Item>
                                                 <NavDropdown.Divider />
                                                 <NavDropdown.Item as={Link} to="./support">Support</NavDropdown.Item>
+                                                {user.get().isAdmin === "true" &&
+                                                    <>
+                                                    <NavDropdown.Divider />
+                                                    <NavDropdown.Item as={Link} to="./messages">Support Messages</NavDropdown.Item>
+                                                    </>
+                                                }
                                             </NavDropdown>
                                         </Nav>
                                     </div>

@@ -17,10 +17,14 @@ import SubscriptionPlans from '../SubscriptionPlans/SubscriptionPlans';
 import Support from '../Support/Support';
 import Register from '../Register/Register';
 import Disclaimer from '../Disclaimer/Disclaimer';
+import SupportMessage from '../Support/SupportMessage';
 
 const Routes = () => {
     return (
         <Switch>
+            <Route path="/messages">
+                <SupportMessage />
+            </Route>
             <Route path="/disclaimer">
                 <Disclaimer />
             </Route>

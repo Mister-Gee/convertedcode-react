@@ -18,6 +18,18 @@ body {
 
 
 /**********Mini Class*************/
+.msg-modal{
+    margin-top: 20px;
+}
+
+.msg-modal p{
+ color: #FFFFFF;
+}
+
+.nav-icon{
+    color: #666666;
+    font-size: 24px;
+}
 
 .loader {
     display: flex;
@@ -635,6 +647,12 @@ body {
 /***********Home***************/
 
 .wrapper {
+    background: #363A43;
+    padding-bottom: 130px;
+    overflow-x: hidden;
+}
+
+.support-wrapper {
     background: #363A43;
     padding-bottom: 130px;
     overflow-x: hidden;
@@ -1840,10 +1858,45 @@ body {
     align-self: center;
 }
 
+.disclaimer-list li{
+    color: #FFFFFF;
+    font-weight: 500;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.paragraph{
+    font-weight: 500;
+    font-size: 14px;
+}
 
 /***************Responsiveness****************/
 
 @media (max-width: 768px) {
+    .support-msg table thead tr th{
+        font-size: 11px !important;
+    }
+
+    .disclaimer-list li{
+        color: #FFFFFF;
+        font-size: 10px;
+        font-weight: 400;
+        margin-bottom: 5px;
+        width: 240px;
+        margin: 0 -60px;
+    }
+    
+    .paragraph{
+        font-weight: 400;
+        font-size: 10px;
+        width: 240px;
+        margin: 0 -30px;
+    }
+
+    .support-msg table tbody tr td{
+        font-size: 9px !important;
+    }
+
     .desktop-header {
         display: none;
     }
@@ -1982,7 +2035,7 @@ body {
         font-weight: 500;
         font-size: 13px;
         line-height: 19px;
-        padding: 19px 1rem;
+        padding: 14px 1rem;
         color: #666666;
         -webkit-transition: var(--transition);
         -moz-transition: var(--transition);

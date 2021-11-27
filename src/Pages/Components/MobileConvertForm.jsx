@@ -265,7 +265,7 @@ const MobileConvertForm = ({close}) => {
                                 <option value="22Bet">22Bet</option>
                                 <option value="1xBet">1xBet</option>
                                 <option value="Betwinner">Betwinner</option>
-                                <option value="Melbet" disabled>Melbet (Coming Soon)</option>
+                                <option value="Melbet">Melbet</option>
                             </select>
                             <small id="passwordHelpBlock" className="form-text text-danger">
                                 {errors.from && touched.from && errors.from}
