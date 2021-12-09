@@ -57,6 +57,18 @@ const Dashboard = () => {
     const [lineData1xBet, setLineData1xBet] = React.useState([])
     const [barXaxis1xBet, setBarXaxis1xBet] = React.useState([])
     const [barData1xBet, setBarData1xBet] = React.useState([])
+    
+    //Betwinner ChartState
+    const [lineXaxisBetwinner, setLineXaxisBetwinner] = React.useState([])
+    const [lineDataBetwinner, setLineDataBetwinner] = React.useState([])
+    const [barXaxisBetwinner, setBarXaxisBetwinner] = React.useState([])
+    const [barDataBetwinner, setBarDataBetwinner] = React.useState([])
+
+    //MelBet ChartState
+    const [lineXaxisMelbet, setLineXaxisMelbet] = React.useState([])
+    const [lineDataMelbet, setLineDataMelbet] = React.useState([])
+    const [barXaxisMelbet, setBarXaxisMelbet] = React.useState([])
+    const [barDataMelbet, setBarDataMelbet] = React.useState([])
 
     useEffect(() => {
         const token = getFromLocalStorage("returnToken")
@@ -161,6 +173,43 @@ const Dashboard = () => {
         fetch()
     }, [])
 
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getDailyConversionData(role("Betwinner"))
+            setLineXaxisBetwinner(res.data.days)
+            setLineDataBetwinner(res.data.totalConversions)
+            
+        }
+        fetch()
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getWeekOfDayConversionData(role("Betwinner"))
+            setBarXaxisBetwinner(res.data.day)
+            setBarDataBetwinner(res.data.totalConversions)
+        }
+        fetch()
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getDailyConversionData(role("Melbet"))
+            setLineXaxisMelbet(res.data.days)
+            setLineDataMelbet(res.data.totalConversions)
+            
+        }
+        fetch()
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await getWeekOfDayConversionData(role("Melbet"))
+            setBarXaxisMelbet(res.data.day)
+            setBarDataMelbet(res.data.totalConversions)
+        }
+        fetch()
+    }, [])
     const {user} = useState(store)
     const {conversionUnit} = useState(store)
     const {totalConversions} = useState(store)
@@ -247,6 +296,32 @@ const Dashboard = () => {
         ],
     };
 
+    const betwinnerBarChartData = {
+        labels: barXaxisBetwinner,
+        datasets: [
+            {
+            label: 'Betwinner Day of the Week Conversions (From 09/12/2021)',
+            data: barDataBetwinner,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            borderWidth: 1,
+            },
+        ],
+    };
+
+    const melbetBarChartData = {
+        labels: barXaxisMelbet,
+        datasets: [
+            {
+            label: 'Melbet Day of the Week Conversions (From 09/12/2021)',
+            data: barDataMelbet,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            borderWidth: 1,
+            },
+        ],
+    };
+
     const barChartOptions = {
     scales: {
         yAxes: [
@@ -317,6 +392,32 @@ const Dashboard = () => {
             {
             label: '1xBet Daily Conversions',
             data: lineData1xBet,
+            fill: false,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            },
+        ],
+    };
+
+    const melbetLineChartData = {
+        labels: lineXaxisMelbet,
+        datasets: [
+            {
+            label: 'Melbet Daily Conversions',
+            data: lineDataMelbet,
+            fill: false,
+            backgroundColor: 'rgba(47, 151, 12, 0.7)',
+            borderColor: 'rgb(47, 151, 12)',
+            },
+        ],
+    };
+
+    const betwinnerLineChartData = {
+        labels: lineXaxisBetwinner,
+        datasets: [
+            {
+            label: 'Betwinner Daily Conversions',
+            data: lineDataBetwinner,
             fill: false,
             backgroundColor: 'rgba(47, 151, 12, 0.7)',
             borderColor: 'rgb(47, 151, 12)',
@@ -503,6 +604,38 @@ const Dashboard = () => {
                     :
                     ""
                     }
+                    {user.get().isAdmin === "true" || user.get().isAdmin === "Betwinner" ? 
+                    <>
+                    <Col lg={6} className="mb-5">
+                        <div className="admin-post">
+                            <Line data={betwinnerLineChartData} options={lineChartOptions} />
+                        </div>
+                    </Col>
+                    <Col lg={6} className="mb-5">
+                        <div className="admin-post">
+                            <Bar data={betwinnerBarChartData} options={barChartOptions} />
+                        </div>
+                    </Col>
+                    </>
+                    :
+                    ""
+                    }
+                    {user.get().isAdmin === "true" || user.get().isAdmin === "Melbet" ? 
+                    <>
+                    <Col lg={6} className="mb-5">
+                        <div className="admin-post">
+                            <Line data={melbetLineChartData} options={lineChartOptions} />
+                        </div>
+                    </Col>
+                    <Col lg={6} className="mb-5">
+                        <div className="admin-post">
+                            <Bar data={melbetBarChartData} options={barChartOptions} />
+                        </div>
+                    </Col>
+                    </>
+                    :
+                    ""
+                    }
                 </Row>
                 <Row className="pt-5 ml-n5 mr-n4 pl-5 pr-5">
                     <Col lg={12}>
@@ -634,6 +767,30 @@ const Dashboard = () => {
                 </div>
                 <div className="admin-post mt-3 mb-2">
                     <Bar data={bet1xBarChartData} options={barChartOptions} />
+                </div>
+                </>
+                :
+                ""
+                }
+                {user.get().isAdmin === "true" || user.get().isAdmin === "Betwinner" ?
+                <>
+                <div className="admin-post mt-3 mb-2">
+                    <Line data={betwinnerLineChartData} options={lineChartOptions} />
+                </div>
+                <div className="admin-post mt-3 mb-2">
+                    <Bar data={betwinnerBarChartData} options={barChartOptions} />
+                </div>
+                </>
+                :
+                ""
+                }
+                {user.get().isAdmin === "true" || user.get().isAdmin === "Melbet" ?
+                <>
+                <div className="admin-post mt-3 mb-2">
+                    <Line data={melbetLineChartData} options={lineChartOptions} />
+                </div>
+                <div className="admin-post mt-3 mb-2">
+                    <Bar data={melbetBarChartData} options={barChartOptions} />
                 </div>
                 </>
                 :
